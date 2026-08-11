@@ -84,6 +84,20 @@
   .icon-btn:active { background: var(--bg-secondary); }
   .header-actions { display: flex; gap: 8px; }
   main { padding: 12px 14px 24px; }
+  .sort-toggle-row { display: flex; gap: 8px; padding: 0 14px 10px; }
+  .sort-chip {
+    flex: 1;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .sort-chip.active { background: var(--accent); color: white; border-color: var(--accent); }
   .status-line {
     font-size: 12px;
     color: var(--text-muted);
@@ -347,6 +361,10 @@
 
 <div class="status-line" id="statusLine">Carregando...</div>
 <div id="statsBar"></div>
+<div class="sort-toggle-row" id="sortToggleRow">
+  <button class="sort-chip" id="sortPriorityBtn">Urgência</button>
+  <button class="sort-chip" id="sortDateBtn">Data</button>
+</div>
 <main id="main"></main>
 
 <button class="add-btn" id="addTaskBtn" style="display:none;">+</button>
@@ -509,6 +527,15 @@
   });
   initTheme();
 
+  function setSortMode(mode) {
+    sortMode = (sortMode === mode) ? 'none' : mode;
+    el('sortPriorityBtn').classList.toggle('active', sortMode === 'priority');
+    el('sortDateBtn').classList.toggle('active', sortMode === 'date');
+    render();
+  }
+  el('sortPriorityBtn').addEventListener('click', () => setSortMode('priority'));
+  el('sortDateBtn').addEventListener('click', () => setSortMode('date'));
+
   function loadConfig() {
     try { cfg = JSON.parse(localStorage.getItem('githubTaskSync') || '{}'); } catch(e) { cfg = {}; }
     if (!cfg.path) cfg.path = 'TASKS.md';
@@ -656,6 +683,35 @@
     if (!cat) return '#8c8c8a';
     const parent = cat.split('/')[0].trim();
     return CATEGORY_PALETTE[hashString(parent) % CATEGORY_PALETTE.length];
+  }
+
+  // ===== Sort by urgency (priority) / by date =====
+  let sortMode = 'none'; // 'none' | 'priority' | 'date'
+  const PRIORITY_RANK = { P0: 0, P1: 1, P2: 2, P3: 3 };
+
+  function sortTasksForDisplay(list) {
+    if (sortMode === 'priority') {
+      return [...list].sort((a, b) => {
+        const ma = parseTaskMeta(a.note), mb = parseTaskMeta(b.note);
+        const ra = ma.priority ? PRIORITY_RANK[ma.priority] : 4;
+        const rb = mb.priority ? PRIORITY_RANK[mb.priority] : 4;
+        if (ra !== rb) return ra - rb;
+        const da = ma.due || '9999-99-99', db = mb.due || '9999-99-99';
+        return da < db ? -1 : da > db ? 1 : 0;
+      });
+    }
+    if (sortMode === 'date') {
+      return [...list].sort((a, b) => {
+        const ma = parseTaskMeta(a.note), mb = parseTaskMeta(b.note);
+        // Tasks without a due date sink to the bottom, closest deadline first.
+        const da = ma.due || '9999-99-99', db = mb.due || '9999-99-99';
+        if (da !== db) return da < db ? -1 : 1;
+        const ra = ma.priority ? PRIORITY_RANK[ma.priority] : 4;
+        const rb = mb.priority ? PRIORITY_RANK[mb.priority] : 4;
+        return ra - rb;
+      });
+    }
+    return list;
   }
 
   function getAllCategories() {
@@ -825,7 +881,7 @@
 
     let html = '';
     sections.forEach(section => {
-      const list = tasks[section.id] || [];
+      const list = sortTasksForDisplay(tasks[section.id] || []);
       const collapsed = collapsedSections[section.id] ? ' collapsed' : '';
       html += `<div class="section-group${collapsed}" data-section="${section.id}">
         <div class="section-head" data-action="toggle-section" data-section="${section.id}">
