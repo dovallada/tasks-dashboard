@@ -10,6 +10,7 @@
   - [ ] Responder Freitas (Due: 0002-08-11)
 - [ ] **Reels Teste - AI QUE LOUCURA** - Due: 2026-08-11 (Tue) · Priority: P2 · Category: 1000vall/social · Status: To Do — Description: Mandar Reels Teste + tiktok variaçoes
 - [ ] **VAI ME VICIAR** - Priority: P0 · Category: 1000vall/vaimeviciar · Status: To Do
+  - [ ] Mandar Rubel > luigi
 
 ## In Progress
 - [ ] **07-29_Brand Repository Videos + Motion Starter Pack Project** - Due: 2026-08-04 (Tue) · Category: Willow/Video Workspace · Status: In Progress · OnHold: true · ClickUp: 86adzx1x6
