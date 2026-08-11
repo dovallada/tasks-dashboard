@@ -14,7 +14,7 @@
 
 ## In Progress
 - [ ] **08-05_AI UGC Explainer** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajwjjf1
-- [ ] **07-29_Brand Repository Videos + Motion Starter Pack Project** - Due: 2026-08-04 (Tue) · Category: Willow/Video Workspace · Status: In Progress · OnHold: true · ClickUp: 86adzx1x6
+- [ ] **07-29_Brand Repository Videos + Motion Starter Pack Project** - Due: 2026-08-04 (Tue) · Priority: P3 · Category: Willow/Video Workspace · Status: In Progress · OnHold: true · ClickUp: 86adzx1x6
 
 ## Done
 - [x] **How GLP-1s Work** - Category: Willow/Videos · Status: Done · ClickUp: 86ah2mmvq
