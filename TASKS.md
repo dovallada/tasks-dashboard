@@ -1,12 +1,12 @@
 # Tasks
 
 ## Backlog
-- [ ] **Ver prêmios Rifa** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: life · Status: Backlog
-  - [ ] Falar Giu
-  - [ ] Falar Hy
 - [ ] **Falar Lua parcerias** - Due: 2026-08-11 (Tue) · Priority: P3 · Category: 1000vall/1000hz · Status: Backlog
 
 ## To Do
+- [ ] **Ver prêmios Rifa** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: life · Status: To Do
+  - [ ] Falar Giu
+  - [ ] Falar Hy
 - [ ] **ANGEL** - Due: 2026-08-11 (Tue) · Priority: P0 · Category: 1000vall/angel · Status: To Do
   - [ ] Combinar Prod Flor (Due: 0002-08-11)
 - [ ] **Ouvir 1000hz nova versao fili** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: 1000vall/1000hz · Status: To Do
