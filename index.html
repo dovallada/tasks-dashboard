@@ -302,8 +302,12 @@
   .subtask-edit-row span.checked { text-decoration: line-through; color: var(--text-muted); }
   .subtask-del { background: none; border: none; color: var(--text-muted); font-size: 18px; line-height: 1; cursor: pointer; padding: 4px 6px; }
   .subtask-add-row { display: flex; gap: 8px; }
-  .subtask-add-row input { flex: 1; }
+  .subtask-add-row input[type="text"] { flex: 1; }
+  .subtask-add-row input[type="date"] { width: 120px; flex-shrink: 0; }
   .subtask-add-row button { width: 44px; flex-shrink: 0; }
+  .subtask-edit-row input[type="date"] { width: 110px; flex-shrink: 0; font-size: 12px; padding: 4px 6px; }
+  .cat-pill-row { margin-top: 8px; }
+  .cat-pill-row .pill { padding: 5px 10px; font-size: 12px; }
   .btn {
     flex: 1;
     padding: 12px;
@@ -393,6 +397,7 @@
     <div class="form-group">
       <label>Categoria</label>
       <input type="text" id="editCategory" placeholder="ex: Trabalho, ou Trabalho/Vídeos">
+      <div class="pill-row cat-pill-row" id="editCategoryChips"></div>
     </div>
     <div class="form-group">
       <label>Descrição</label>
@@ -407,6 +412,7 @@
       <div class="subtask-edit-list" id="editSubtaskList"></div>
       <div class="subtask-add-row">
         <input type="text" id="editSubtaskInput" placeholder="Nova subtask">
+        <input type="date" id="editSubtaskDue">
         <button class="btn" id="editSubtaskAdd" type="button">+</button>
       </div>
     </div>
@@ -442,6 +448,7 @@
     <div class="form-group">
       <label>Categoria</label>
       <input type="text" id="addCategory" placeholder="ex: Trabalho, ou Trabalho/Vídeos">
+      <div class="pill-row cat-pill-row" id="addCategoryChips"></div>
     </div>
     <div class="form-group">
       <label>Descrição</label>
@@ -646,6 +653,29 @@
     if (!cat) return '#8c8c8a';
     const parent = cat.split('/')[0].trim();
     return CATEGORY_PALETTE[hashString(parent) % CATEGORY_PALETTE.length];
+  }
+
+  function getAllCategories() {
+    const set = new Set();
+    Object.values(tasks).forEach(list => (list || []).forEach(t => {
+      const c = parseTaskMeta(t.note).category;
+      if (c) set.add(c);
+    }));
+    return [...set].sort();
+  }
+
+  function buildCategoryChips(rowId, inputId) {
+    const row = el(rowId);
+    if (!row) return;
+    const cats = getAllCategories();
+    if (cats.length === 0) { row.innerHTML = ''; return; }
+    row.innerHTML = cats.map(c => {
+      const color = categoryColor(c);
+      return `<div class="pill" data-cat="${escapeHtml(c)}" style="border-color:${color}66; color:${color};">${escapeHtml(categoryDisplayLabel(c))}</div>`;
+    }).join('');
+    row.querySelectorAll('.pill').forEach(p => {
+      p.addEventListener('click', () => { el(inputId).value = p.dataset.cat; });
+    });
   }
 
   function categoryDisplayLabel(cat) {
@@ -951,6 +981,7 @@
     sectionSel.innerHTML = sections.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
     sectionSel.value = task.section;
     buildPriorityPills('editPriority', meta.priority || '');
+    buildCategoryChips('editCategoryChips', 'editCategory');
     renderEditSubtasks();
     el('editOverlay').classList.add('visible');
   }
@@ -976,9 +1007,17 @@
       <div class="subtask-edit-row">
         <div class="checkbox ${st.checked ? 'checked' : ''}" data-action="edit-toggle-sub" data-idx="${idx}"></div>
         <span class="${st.checked ? 'checked' : ''}">${escapeHtml(st.text)}</span>
+        <input type="date" value="${st.due || ''}" data-action="edit-sub-due" data-idx="${idx}">
         <button class="subtask-del" data-action="edit-delete-sub" data-idx="${idx}" type="button">&times;</button>
       </div>
     `).join('');
+    list.querySelectorAll('input[data-action="edit-sub-due"]').forEach(inp => {
+      inp.addEventListener('change', () => {
+        const idx = parseInt(inp.dataset.idx);
+        editingTask.subtasks[idx].due = inp.value || null;
+        queuePush();
+      });
+    });
   }
 
   document.addEventListener('click', (e) => {
@@ -1001,11 +1040,13 @@
   el('editSubtaskAdd').addEventListener('click', () => {
     if (!editingTask) return;
     const input = el('editSubtaskInput');
+    const dueInput = el('editSubtaskDue');
     const text = input.value.trim();
     if (!text) return;
     if (!editingTask.subtasks) editingTask.subtasks = [];
-    editingTask.subtasks.push({ text, checked: false, due: null });
+    editingTask.subtasks.push({ text, checked: false, due: dueInput.value || null });
     input.value = '';
+    dueInput.value = '';
     renderEditSubtasks();
     queuePush();
   });
@@ -1048,6 +1089,7 @@
     const sel = el('addSection');
     sel.innerHTML = sections.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
     buildPriorityPills('addPriority', '');
+    buildCategoryChips('addCategoryChips', 'addCategory');
     el('addOverlay').classList.add('visible');
   });
   el('addCancel').addEventListener('click', () => el('addOverlay').classList.remove('visible'));
