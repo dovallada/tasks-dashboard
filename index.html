@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Tasks</title>
 <style>
   :root {
@@ -347,6 +350,15 @@
 
   const el = id => document.getElementById(id);
   const escapeHtml = s => (s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  // Defensive: never let a missing #statusLine (stale cache, DOM timing, etc.)
+  // silently abort a push/pull halfway through.
+  function setStatusLine(text, visible) {
+    const line = el('statusLine');
+    if (!line) return;
+    if (visible !== undefined) line.style.display = visible ? 'block' : 'none';
+    line.textContent = text;
+  }
 
   function loadConfig() {
     try { cfg = JSON.parse(localStorage.getItem('githubTaskSync') || '{}'); } catch(e) { cfg = {}; }
@@ -771,13 +783,12 @@
 
   el('refreshBtn').addEventListener('click', async () => {
     if (!isConfigured()) { el('settingsBtn').click(); return; }
-    el('statusLine').style.display = 'block';
-    el('statusLine').textContent = 'Atualizando...';
+    setStatusLine('Atualizando...', true);
     try {
       await pullFromGithub();
-      el('statusLine').style.display = 'none';
+      setStatusLine('', false);
     } catch (e) {
-      el('statusLine').textContent = 'Erro: ' + e.message;
+      setStatusLine('Erro: ' + e.message, true);
     }
   });
 
@@ -822,8 +833,7 @@
 
   async function pushToGithub() {
     if (!isConfigured()) return;
-    el('statusLine').style.display = 'block';
-    el('statusLine').textContent = 'Sincronizando...';
+    setStatusLine('Sincronizando...', true);
     try {
       const content = toMarkdown();
       const body = {
@@ -842,10 +852,10 @@
       }
       const data = await res.json();
       currentSha = data.content.sha;
-      el('statusLine').textContent = 'Sincronizado';
-      setTimeout(() => { el('statusLine').style.display = 'none'; }, 1200);
+      setStatusLine('Sincronizado', true);
+      setTimeout(() => { setStatusLine('', false); }, 1200);
     } catch (e) {
-      el('statusLine').textContent = 'Erro ao sincronizar: ' + e.message;
+      setStatusLine('Erro ao sincronizar: ' + e.message, true);
     }
   }
 
@@ -854,8 +864,7 @@
   if (isConfigured()) {
     render();
     pullFromGithub().catch(e => {
-      el('statusLine').style.display = 'block';
-      el('statusLine').textContent = 'Erro: ' + e.message;
+      setStatusLine('Erro: ' + e.message, true);
     });
   } else {
     render();
