@@ -287,6 +287,10 @@
       <input type="date" id="editDue">
     </div>
     <div class="form-group">
+      <label>Status</label>
+      <select id="editSection"></select>
+    </div>
+    <div class="form-group">
       <label>Prioridade</label>
       <div class="pill-row" id="editPriority"></div>
     </div>
@@ -661,6 +665,9 @@
     el('editCategory').value = meta.category || '';
     el('editDesc').value = meta.extra || '';
     el('editOnHold').checked = !!meta.onHold;
+    const sectionSel = el('editSection');
+    sectionSel.innerHTML = sections.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
+    sectionSel.value = task.section;
     buildPriorityPills(meta.priority || '');
     el('editOverlay').classList.add('visible');
   }
@@ -681,6 +688,19 @@
 
   el('editSave').addEventListener('click', () => {
     if (!editingTask) return;
+    const newSectionId = el('editSection').value;
+    if (newSectionId && newSectionId !== editingTask.section) {
+      const oldArr = tasks[editingTask.section] || [];
+      const idx = oldArr.findIndex(t => t.id === editingTask.id);
+      if (idx !== -1) oldArr.splice(idx, 1);
+      editingTask.section = newSectionId;
+      // Moving out of Done manually should un-check it — otherwise it'd
+      // immediately re-archive itself the next time it renders.
+      const doneSection = sections.find(s => s.name.trim().toLowerCase() === 'done');
+      if (doneSection) editingTask.checked = (newSectionId === doneSection.id);
+      if (!tasks[newSectionId]) tasks[newSectionId] = [];
+      tasks[newSectionId].unshift(editingTask);
+    }
     const meta = parseTaskMeta(editingTask.note);
     meta.due = el('editDue').value || null;
     meta.priority = el('editPriority').dataset.selected || null;
