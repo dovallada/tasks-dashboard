@@ -84,20 +84,17 @@
   .icon-btn:active { background: var(--bg-secondary); }
   .header-actions { display: flex; gap: 8px; }
   main { padding: 12px 14px 24px; }
-  .sort-toggle-row { display: flex; gap: 8px; padding: 0 14px 10px; }
-  .sort-chip {
-    flex: 1;
-    padding: 8px;
-    border-radius: 10px;
+  .sort-toggle-row { padding: 0 14px 10px; }
+  .sort-select {
+    padding: 7px 10px;
+    border-radius: 20px;
     border: 1px solid var(--border);
     background: var(--bg-card);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     color: var(--text-secondary);
-    cursor: pointer;
     font-family: inherit;
   }
-  .sort-chip.active { background: var(--accent); color: white; border-color: var(--accent); }
   .status-line {
     font-size: 12px;
     color: var(--text-muted);
@@ -362,8 +359,11 @@
 <div class="status-line" id="statusLine">Carregando...</div>
 <div id="statsBar"></div>
 <div class="sort-toggle-row" id="sortToggleRow">
-  <button class="sort-chip" id="sortPriorityBtn">Urgência</button>
-  <button class="sort-chip" id="sortDateBtn">Data</button>
+  <select id="sortSelect" class="sort-select">
+    <option value="none">Ordem padrão</option>
+    <option value="priority">Ordenar por urgência</option>
+    <option value="date">Ordenar por data</option>
+  </select>
 </div>
 <main id="main"></main>
 
@@ -527,14 +527,10 @@
   });
   initTheme();
 
-  function setSortMode(mode) {
-    sortMode = (sortMode === mode) ? 'none' : mode;
-    el('sortPriorityBtn').classList.toggle('active', sortMode === 'priority');
-    el('sortDateBtn').classList.toggle('active', sortMode === 'date');
+  el('sortSelect').addEventListener('change', () => {
+    sortMode = el('sortSelect').value;
     render();
-  }
-  el('sortPriorityBtn').addEventListener('click', () => setSortMode('priority'));
-  el('sortDateBtn').addEventListener('click', () => setSortMode('date'));
+  });
 
   function loadConfig() {
     try { cfg = JSON.parse(localStorage.getItem('githubTaskSync') || '{}'); } catch(e) { cfg = {}; }
@@ -689,6 +685,36 @@
   let sortMode = 'none'; // 'none' | 'priority' | 'date'
   const PRIORITY_RANK = { P0: 0, P1: 1, P2: 2, P3: 3 };
 
+  // The date that actually matters for a task is whichever comes soonest —
+  // its own due date, or any of its subtasks' due dates.
+  function getEffectiveDue(task) {
+    let earliest = null;
+    const own = parseTaskMeta(task.note).due;
+    if (own) earliest = own;
+    (task.subtasks || []).forEach(st => {
+      if (st.due && (!earliest || st.due < earliest)) earliest = st.due;
+    });
+    return earliest;
+  }
+
+  // For "sort by date" ranking: overdue tasks sink to the bottom alongside
+  // undated ones — a missed deadline shouldn't outrank what's still coming
+  // up. Only today/future dates compete for the top spots, soonest first.
+  // A task can have several dates in play (its own + each subtask's) — an
+  // overdue subtask shouldn't drag down a task whose main deadline (or
+  // another subtask) is still upcoming, so we look at ALL of them and pick
+  // the earliest one that hasn't passed yet.
+  function getDateSortKey(task) {
+    const todayStr = formatDateLocal(new Date());
+    const candidates = [];
+    const own = parseTaskMeta(task.note).due;
+    if (own) candidates.push(own);
+    (task.subtasks || []).forEach(st => { if (st.due) candidates.push(st.due); });
+    const upcoming = candidates.filter(d => d >= todayStr).sort();
+    if (upcoming.length > 0) return upcoming[0];
+    return '9999-99-99';
+  }
+
   function sortTasksForDisplay(list) {
     if (sortMode === 'priority') {
       return [...list].sort((a, b) => {
@@ -696,19 +722,23 @@
         const ra = ma.priority ? PRIORITY_RANK[ma.priority] : 4;
         const rb = mb.priority ? PRIORITY_RANK[mb.priority] : 4;
         if (ra !== rb) return ra - rb;
-        const da = ma.due || '9999-99-99', db = mb.due || '9999-99-99';
+        const da = getEffectiveDue(a) || '9999-99-99', db = getEffectiveDue(b) || '9999-99-99';
         return da < db ? -1 : da > db ? 1 : 0;
       });
     }
     if (sortMode === 'date') {
       return [...list].sort((a, b) => {
-        const ma = parseTaskMeta(a.note), mb = parseTaskMeta(b.note);
-        // Tasks without a due date sink to the bottom, closest deadline first.
-        const da = ma.due || '9999-99-99', db = mb.due || '9999-99-99';
+        // Overdue/undated tasks sink to the bottom; closest upcoming
+        // deadline first among the rest.
+        const da = getDateSortKey(a), db = getDateSortKey(b);
         if (da !== db) return da < db ? -1 : 1;
+        const ma = parseTaskMeta(a.note), mb = parseTaskMeta(b.note);
         const ra = ma.priority ? PRIORITY_RANK[ma.priority] : 4;
         const rb = mb.priority ? PRIORITY_RANK[mb.priority] : 4;
-        return ra - rb;
+        if (ra !== rb) return ra - rb;
+        // Same date (or no date) and same priority — fall back to
+        // alphabetical so the order looks deliberate instead of arbitrary.
+        return a.title.localeCompare(b.title);
       });
     }
     return list;
