@@ -796,7 +796,7 @@
   }
 
   async function pullFromGithub() {
-    const res = await fetch(ghUrl(), { headers: ghHeaders() });
+    const res = await fetch(ghUrl(), { headers: ghHeaders(), cache: 'no-store' });
     if (res.status === 404) {
       // file doesn't exist yet — start empty, will be created on first push
       currentSha = null;
