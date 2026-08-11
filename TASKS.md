@@ -1,7 +1,7 @@
 # Tasks
 
 ## Backlog
-- [ ] **yes jsin** - Status: Backlog
+- [ ] **yes jsin** - Category: 1000vall/test · Status: Backlog
   - [ ] sub (Due: 2026-08-11)
   - [ ] udhs (Due: 2026-08-11)
 - [ ] **test** - Status: Backlog
