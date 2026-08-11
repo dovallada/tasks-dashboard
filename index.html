@@ -296,6 +296,14 @@
   .checkbox-row { display: flex; align-items: center; gap: 10px; }
   .checkbox-row input { width: auto; }
   .sheet-actions { display: flex; gap: 10px; margin-top: 18px; }
+  .subtask-edit-list { margin-bottom: 8px; }
+  .subtask-edit-row { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border-light); }
+  .subtask-edit-row span { flex: 1; font-size: 14px; }
+  .subtask-edit-row span.checked { text-decoration: line-through; color: var(--text-muted); }
+  .subtask-del { background: none; border: none; color: var(--text-muted); font-size: 18px; line-height: 1; cursor: pointer; padding: 4px 6px; }
+  .subtask-add-row { display: flex; gap: 8px; }
+  .subtask-add-row input { flex: 1; }
+  .subtask-add-row button { width: 44px; flex-shrink: 0; }
   .btn {
     flex: 1;
     padding: 12px;
@@ -394,6 +402,14 @@
       <input type="checkbox" id="editOnHold">
       <label style="margin:0;">On Hold</label>
     </div>
+    <div class="form-group">
+      <label>Subtasks</label>
+      <div class="subtask-edit-list" id="editSubtaskList"></div>
+      <div class="subtask-add-row">
+        <input type="text" id="editSubtaskInput" placeholder="Nova subtask">
+        <button class="btn" id="editSubtaskAdd" type="button">+</button>
+      </div>
+    </div>
     <div class="sheet-actions">
       <button class="btn danger" id="editDelete">Excluir</button>
       <button class="btn" id="editCancel">Cancelar</button>
@@ -414,6 +430,26 @@
     <div class="form-group">
       <label>Seção</label>
       <select id="addSection"></select>
+    </div>
+    <div class="form-group">
+      <label>Due date</label>
+      <input type="date" id="addDue">
+    </div>
+    <div class="form-group">
+      <label>Prioridade</label>
+      <div class="pill-row" id="addPriority"></div>
+    </div>
+    <div class="form-group">
+      <label>Categoria</label>
+      <input type="text" id="addCategory" placeholder="ex: Trabalho, ou Trabalho/Vídeos">
+    </div>
+    <div class="form-group">
+      <label>Descrição</label>
+      <textarea id="addDesc"></textarea>
+    </div>
+    <div class="form-group checkbox-row">
+      <input type="checkbox" id="addOnHold">
+      <label style="margin:0;">On Hold</label>
     </div>
     <div class="sheet-actions">
       <button class="btn" id="addCancel">Cancelar</button>
@@ -914,20 +950,65 @@
     const sectionSel = el('editSection');
     sectionSel.innerHTML = sections.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
     sectionSel.value = task.section;
-    buildPriorityPills(meta.priority || '');
+    buildPriorityPills('editPriority', meta.priority || '');
+    renderEditSubtasks();
     el('editOverlay').classList.add('visible');
   }
 
-  function buildPriorityPills(selected) {
-    const row = el('editPriority');
+  function buildPriorityPills(rowId, selected) {
+    const row = el(rowId);
     row.dataset.selected = selected;
     row.innerHTML = Object.keys(PRIORITY_NAMES).map(p =>
       `<div class="pill${p === selected ? ' selected' : ''}" data-p="${p}">${PRIORITY_NAMES[p]}</div>`
     ).join('') + `<div class="pill${selected === '' ? ' selected' : ''}" data-p="">Nenhuma</div>`;
     row.querySelectorAll('.pill').forEach(pill => {
-      pill.addEventListener('click', () => { buildPriorityPills(pill.dataset.p); });
+      pill.addEventListener('click', () => { buildPriorityPills(rowId, pill.dataset.p); });
     });
   }
+
+  function renderEditSubtasks() {
+    const list = el('editSubtaskList');
+    if (!editingTask || !editingTask.subtasks || editingTask.subtasks.length === 0) {
+      list.innerHTML = '<div class="helper-text">Nenhuma subtask ainda</div>';
+      return;
+    }
+    list.innerHTML = editingTask.subtasks.map((st, idx) => `
+      <div class="subtask-edit-row">
+        <div class="checkbox ${st.checked ? 'checked' : ''}" data-action="edit-toggle-sub" data-idx="${idx}"></div>
+        <span class="${st.checked ? 'checked' : ''}">${escapeHtml(st.text)}</span>
+        <button class="subtask-del" data-action="edit-delete-sub" data-idx="${idx}" type="button">&times;</button>
+      </div>
+    `).join('');
+  }
+
+  document.addEventListener('click', (e) => {
+    const actionEl = e.target.closest('[data-action]');
+    if (!actionEl || !editingTask) return;
+    const action = actionEl.dataset.action;
+    if (action === 'edit-toggle-sub') {
+      const idx = parseInt(actionEl.dataset.idx);
+      editingTask.subtasks[idx].checked = !editingTask.subtasks[idx].checked;
+      renderEditSubtasks();
+      queuePush();
+    } else if (action === 'edit-delete-sub') {
+      const idx = parseInt(actionEl.dataset.idx);
+      editingTask.subtasks.splice(idx, 1);
+      renderEditSubtasks();
+      queuePush();
+    }
+  });
+
+  el('editSubtaskAdd').addEventListener('click', () => {
+    if (!editingTask) return;
+    const input = el('editSubtaskInput');
+    const text = input.value.trim();
+    if (!text) return;
+    if (!editingTask.subtasks) editingTask.subtasks = [];
+    editingTask.subtasks.push({ text, checked: false, due: null });
+    input.value = '';
+    renderEditSubtasks();
+    queuePush();
+  });
 
   el('editCancel').addEventListener('click', () => { el('editOverlay').classList.remove('visible'); editingTask = null; });
   el('editOverlay').addEventListener('click', (e) => { if (e.target.id === 'editOverlay') { el('editOverlay').classList.remove('visible'); editingTask = null; } });
@@ -960,8 +1041,13 @@
   // ===== Add task sheet =====
   el('addTaskBtn').addEventListener('click', () => {
     el('addTitle').value = '';
+    el('addDue').value = '';
+    el('addCategory').value = '';
+    el('addDesc').value = '';
+    el('addOnHold').checked = false;
     const sel = el('addSection');
     sel.innerHTML = sections.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
+    buildPriorityPills('addPriority', '');
     el('addOverlay').classList.add('visible');
   });
   el('addCancel').addEventListener('click', () => el('addOverlay').classList.remove('visible'));
@@ -970,8 +1056,15 @@
     const title = el('addTitle').value.trim();
     if (!title) return;
     const sectionId = el('addSection').value;
-    const sectionName = sections.find(s => s.id === sectionId)?.name || sectionId;
-    const task = { id: Date.now() + Math.random(), title, note: `Status: ${sectionName}`, checked: false, subtasks: [], section: sectionId };
+    const task = { id: Date.now() + Math.random(), title, note: '', checked: false, subtasks: [], section: sectionId };
+    const meta = {
+      due: el('addDue').value || null,
+      priority: el('addPriority').dataset.selected || null,
+      category: el('addCategory').value.trim() || null,
+      extra: el('addDesc').value.trim(),
+      onHold: el('addOnHold').checked
+    };
+    task.note = rebuildNoteFromMeta(meta, task);
     if (!tasks[sectionId]) tasks[sectionId] = [];
     tasks[sectionId].unshift(task);
     el('addOverlay').classList.remove('visible');
