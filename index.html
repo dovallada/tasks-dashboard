@@ -178,6 +178,9 @@
   .subtask-row .checkbox { width: 16px; height: 16px; min-width: 16px; border-radius: 4px; }
   .subtask-row .checkbox.checked::after { left: 4px; top: 1px; width: 3px; height: 7px; }
   .subtask-row span.checked { text-decoration: line-through; color: var(--text-muted); }
+  .subtask-row span { flex: 1; }
+  .subtask-due { font-size: 11px; padding: 1px 8px; border-radius: 20px; border: 1px solid var(--border); color: var(--text-muted); white-space: nowrap; }
+  .subtask-due-overdue { color: #e0574f; border-color: #e0574f66; }
 
   .drag-handle {
     background: transparent;
@@ -857,9 +860,14 @@
         if (t.subtasks && t.subtasks.length > 0) {
           html += `<div class="subtasks">`;
           t.subtasks.forEach((st, idx) => {
+            const stOverdue = isOverdueStr(st.due, st.checked);
+            const stDueHtml = st.due
+              ? `<span class="subtask-due${stOverdue ? ' subtask-due-overdue' : ''}">${escapeHtml(formatDueLabel(st.due))}</span>`
+              : '';
             html += `<div class="subtask-row">
               <div class="checkbox ${st.checked ? 'checked' : ''}" data-action="toggle-sub" data-id="${t.id}" data-idx="${idx}"></div>
               <span class="${st.checked ? 'checked' : ''}">${escapeHtml(st.text)}</span>
+              ${stDueHtml}
             </div>`;
           });
           html += `</div>`;
