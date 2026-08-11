@@ -8,7 +8,6 @@
 - [ ] **Ver prêmios Rifa** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: life · Status: To Do
   - [ ] Falar Giu
   - [ ] Falar Hy
-- [ ] **Ouvir 1000hz nova versao fili** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: 1000vall/1000hz · Status: To Do
 - [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
   - [ ] Responder Freitas (Due: 0002-08-11)
 - [ ] **Reels Teste - AI QUE LOUCURA** - Due: 2026-08-11 (Tue) · Priority: P2 · Category: 1000vall/social · Status: To Do — Description: Mandar Reels Teste + tiktok variaçoes
@@ -23,6 +22,7 @@
 - [ ] **07-29_Brand Repository Videos + Motion Starter Pack Project** - Due: 2026-08-04 (Tue) · Category: Willow/Video Workspace · Status: In Progress · ClickUp: 86adzx1x6
 
 ## Done
+- [x] **Ouvir 1000hz nova versao fili** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: 1000vall/1000hz · Status: Done
 - [x] **07-09_AI Iterations** - Due: 2026-07-14 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ajey7d5
 - [x] **6-17_Scientific Explainers** - Due: 2026-06-30 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86aj42tjq
 - [x] **06-11_AI News Stories** - Due: 2026-06-16 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86aj02p84
