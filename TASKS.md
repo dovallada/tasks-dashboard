@@ -1,6 +1,9 @@
 # Tasks
 
 ## Backlog
+- [ ] **Ideias Jogos Apps  Sites** - Due: 2026-08-11 (Tue) · Priority: P2 · Category: 1000vall/1000hz · Status: Backlog — Description: Ideias jogos sites apps 
+
+Ex: Faça sua harmonização
 - [ ] **Falar Lua parcerias** - Due: 2026-08-11 (Tue) · Priority: P3 · Category: 1000vall/1000hz · Status: Backlog
 
 ## To Do
