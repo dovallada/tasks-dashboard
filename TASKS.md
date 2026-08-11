@@ -8,8 +8,6 @@
 - [ ] **Ver prêmios Rifa** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: life · Status: To Do
   - [ ] Falar Giu
   - [ ] Falar Hy
-- [ ] **ANGEL** - Due: 2026-08-11 (Tue) · Priority: P0 · Category: 1000vall/angel · Status: To Do
-  - [ ] Combinar Prod Flor (Due: 0002-08-11)
 - [ ] **Ouvir 1000hz nova versao fili** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: 1000vall/1000hz · Status: To Do
 - [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
   - [ ] Responder Freitas (Due: 0002-08-11)
@@ -17,6 +15,8 @@
 - [ ] **VAI ME VICIAR** - Priority: P0 · Category: 1000vall/vaimeviciar · Status: To Do
   - [x] Mandar Rubel > luigi (Due: 0002-08-11)
 - [ ] **Ver com lukinhas/carlozs pagamentos** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do — Description: Criar grupo sem george pra discutir
+- [ ] **ANGEL** - Due: 2026-08-11 (Tue) · Priority: P0 · Category: 1000vall/angel · Status: To Do · OnHold: true
+  - [ ] Combinar Prod Flor (Due: 0002-08-11)
 
 ## In Progress
 - [ ] **08-05_AI UGC Explainer** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajwjjf1
