@@ -170,6 +170,36 @@
   .subtask-row .checkbox { width: 16px; height: 16px; min-width: 16px; border-radius: 4px; }
   .subtask-row .checkbox.checked::after { left: 4px; top: 1px; width: 3px; height: 7px; }
   .subtask-row span.checked { text-decoration: line-through; color: var(--text-muted); }
+
+  .drag-handle {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 18px;
+    padding: 4px 6px;
+    cursor: grab;
+    touch-action: none;
+    flex-shrink: 0;
+  }
+
+  .drag-ghost {
+    position: fixed;
+    z-index: 200;
+    pointer-events: none;
+    opacity: 0.92;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    transform: scale(1.02);
+  }
+
+  .task-row.drag-source-hidden { opacity: 0.25; }
+
+  .section-group.drag-over-section > .section-head {
+    background: var(--accent);
+    color: white;
+    border-radius: 8px;
+  }
+  .section-group.drag-over-section > .section-head h2,
+  .section-group.drag-over-section > .section-head .section-count { color: white; }
   .add-btn {
     position: fixed;
     right: 20px;
@@ -637,6 +667,22 @@
     queuePush();
   }
 
+  // Shared by the edit sheet's Status dropdown and touch drag-and-drop.
+  function moveTaskToSection(task, newSectionId) {
+    if (!newSectionId || newSectionId === task.section) return;
+    const oldArr = tasks[task.section] || [];
+    const idx = oldArr.findIndex(t => t.id === task.id);
+    if (idx !== -1) oldArr.splice(idx, 1);
+    task.section = newSectionId;
+    // Moving out of Done manually should un-check it — otherwise it'd
+    // immediately re-archive itself the next time it renders.
+    const doneSection = sections.find(s => s.name.trim().toLowerCase() === 'done');
+    if (doneSection) task.checked = (newSectionId === doneSection.id);
+    if (!tasks[newSectionId]) tasks[newSectionId] = [];
+    tasks[newSectionId].unshift(task);
+    task.note = rebuildNoteFromMeta(parseTaskMeta(task.note), task);
+  }
+
   // ===== Rendering =====
   function renderStatsBar() {
     const bar = el('statsBar');
@@ -719,6 +765,7 @@
             <div class="checkbox ${t.checked ? 'checked' : ''}" data-action="toggle" data-id="${t.id}"></div>
             <div class="task-title ${t.checked ? 'checked' : ''}" data-action="edit" data-id="${t.id}">${escapeHtml(t.title)}</div>
             <button class="hold-toggle ${meta.onHold ? 'active' : ''}" data-action="toggle-hold" data-id="${t.id}">&#9208;</button>
+            <button class="drag-handle" data-id="${t.id}" title="Drag to move">&#8942;&#8942;</button>
           </div>`;
 
         let chips = '';
@@ -771,6 +818,74 @@
     else if (action === 'edit') openEditSheet(task);
   });
 
+  // ===== Touch drag-and-drop: move a card between sections, desktop-style =====
+  let dragState = null;
+
+  document.addEventListener('touchstart', (e) => {
+    const handle = e.target.closest('.drag-handle');
+    if (!handle) return;
+    const rowEl = handle.closest('.task-row');
+    if (!rowEl) return;
+    const task = findTaskById(rowEl.dataset.id);
+    if (!task) return;
+
+    e.preventDefault();
+    const touch = e.touches[0];
+    const rect = rowEl.getBoundingClientRect();
+
+    const ghost = rowEl.cloneNode(true);
+    ghost.classList.add('drag-ghost');
+    ghost.style.width = rect.width + 'px';
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    rowEl.classList.add('drag-source-hidden');
+
+    dragState = {
+      task, rowEl, ghost,
+      offsetX: touch.clientX - rect.left,
+      offsetY: touch.clientY - rect.top,
+      targetSectionId: null
+    };
+  }, { passive: false });
+
+  document.addEventListener('touchmove', (e) => {
+    if (!dragState) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    dragState.ghost.style.left = (touch.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top = (touch.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(touch.clientX, touch.clientY);
+    dragState.ghost.style.display = '';
+    const sectionEl = under ? under.closest('.section-group') : null;
+
+    document.querySelectorAll('.section-group.drag-over-section').forEach(s => s.classList.remove('drag-over-section'));
+    if (sectionEl) sectionEl.classList.add('drag-over-section');
+    dragState.targetSectionId = sectionEl ? sectionEl.dataset.section : null;
+
+    // Gentle auto-scroll near the top/bottom edges of the viewport.
+    const edge = 60;
+    if (touch.clientY < edge) window.scrollBy(0, -12);
+    else if (touch.clientY > window.innerHeight - edge) window.scrollBy(0, 12);
+  }, { passive: false });
+
+  document.addEventListener('touchend', () => {
+    if (!dragState) return;
+    const { task, rowEl, ghost, targetSectionId } = dragState;
+    ghost.remove();
+    rowEl.classList.remove('drag-source-hidden');
+    document.querySelectorAll('.section-group.drag-over-section').forEach(s => s.classList.remove('drag-over-section'));
+    dragState = null;
+
+    if (targetSectionId && targetSectionId !== task.section) {
+      moveTaskToSection(task, targetSectionId);
+      render();
+      queuePush();
+    }
+  });
+
   function findTaskById(id) {
     for (const s of sections) {
       const found = (tasks[s.id] || []).find(t => String(t.id) === String(id));
@@ -811,19 +926,7 @@
 
   el('editSave').addEventListener('click', () => {
     if (!editingTask) return;
-    const newSectionId = el('editSection').value;
-    if (newSectionId && newSectionId !== editingTask.section) {
-      const oldArr = tasks[editingTask.section] || [];
-      const idx = oldArr.findIndex(t => t.id === editingTask.id);
-      if (idx !== -1) oldArr.splice(idx, 1);
-      editingTask.section = newSectionId;
-      // Moving out of Done manually should un-check it — otherwise it'd
-      // immediately re-archive itself the next time it renders.
-      const doneSection = sections.find(s => s.name.trim().toLowerCase() === 'done');
-      if (doneSection) editingTask.checked = (newSectionId === doneSection.id);
-      if (!tasks[newSectionId]) tasks[newSectionId] = [];
-      tasks[newSectionId].unshift(editingTask);
-    }
+    moveTaskToSection(editingTask, el('editSection').value);
     const meta = parseTaskMeta(editingTask.note);
     meta.due = el('editDue').value || null;
     meta.priority = el('editPriority').dataset.selected || null;
