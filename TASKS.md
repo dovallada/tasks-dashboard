@@ -2,7 +2,6 @@
 
 ## Backlog
 - [ ] **TEST MOBILE 6** - Status: Backlog
-- [ ] **TESTE 524**
 
 ## To Do
 - [ ] **Reels Teste - AI QUE LOUCURA** - Due: 2026-08-11 (Tue) · Priority: P2 · Category: 1000vall/social · Status: To Do — Description: Mandar Reels Teste + tiktok variaçoes
