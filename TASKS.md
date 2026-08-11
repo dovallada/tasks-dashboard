@@ -1,6 +1,7 @@
 # Tasks
 
 ## Backlog
+- [ ] **TEST MOBILE 6** - Status: Backlog
 - [ ] **TESTE 524**
 - [ ] **TEST DESK 7**
 
