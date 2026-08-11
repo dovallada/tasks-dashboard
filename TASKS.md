@@ -7,6 +7,7 @@
   - [ ] test
 
 ## To Do
+- [ ] **08-05_AI UGC Explainer** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajwjjf1
 - [ ] **Falar Flor - Angel** - Due: 2026-08-11 (Tue) · Priority: P0 · Category: 1000vall/angel · Status: To Do
 - [ ] **Ouvir 1000hz nova versao fili** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: 1000vall/1000hz · Status: To Do
 - [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
@@ -14,7 +15,6 @@
 - [ ] **Reels Teste - AI QUE LOUCURA** - Due: 2026-08-11 (Tue) · Priority: P2 · Category: 1000vall/social · Status: To Do — Description: Mandar Reels Teste + tiktok variaçoes
 
 ## In Progress
-- [ ] **08-05_AI UGC Explainer** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajwjjf1
 - [ ] **07-29_Brand Repository Videos + Motion Starter Pack Project** - Due: 2026-08-04 (Tue) · Category: Willow/Video Workspace · Status: In Progress · OnHold: true · ClickUp: 86adzx1x6
 
 ## Done
