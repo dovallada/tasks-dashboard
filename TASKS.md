@@ -4,7 +4,7 @@
 
 ## To Do
 - [ ] **ANGEL** - Due: 2026-08-11 (Tue) · Priority: P0 · Category: 1000vall/angel · Status: To Do
-  - [ ] Combinar Prod Flor (Due: 0002-08-13)
+  - [ ] Combinar Prod Flor (Due: 0002-08-11)
 - [ ] **Ouvir 1000hz nova versao fili** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: 1000vall/1000hz · Status: To Do
 - [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
   - [ ] Responder Freitas (Due: 0002-08-11)
