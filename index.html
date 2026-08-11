@@ -297,15 +297,15 @@
   .checkbox-row input { width: auto; }
   .sheet-actions { display: flex; gap: 10px; margin-top: 18px; }
   .subtask-edit-list { margin-bottom: 8px; }
-  .subtask-edit-row { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border-light); }
-  .subtask-edit-row span { flex: 1; font-size: 14px; }
-  .subtask-edit-row span.checked { text-decoration: line-through; color: var(--text-muted); }
+  .subtask-edit-row { padding: 8px 0; border-bottom: 1px solid var(--border-light); }
+  .subtask-edit-row-top { display: flex; align-items: center; gap: 8px; }
+  .subtask-edit-row-top span { flex: 1; font-size: 14px; }
+  .subtask-edit-row-top span.checked { text-decoration: line-through; color: var(--text-muted); }
   .subtask-del { background: none; border: none; color: var(--text-muted); font-size: 18px; line-height: 1; cursor: pointer; padding: 4px 6px; }
+  .subtask-due-input { width: calc(100% - 30px); margin: 6px 0 0 30px; font-size: 13px; padding: 8px 10px; }
   .subtask-add-row { display: flex; gap: 8px; }
-  .subtask-add-row input[type="text"] { flex: 1; }
-  .subtask-add-row input[type="date"] { width: 120px; flex-shrink: 0; }
-  .subtask-add-row button { width: 44px; flex-shrink: 0; }
-  .subtask-edit-row input[type="date"] { width: 110px; flex-shrink: 0; font-size: 12px; padding: 4px 6px; }
+  .subtask-add-row input[type="date"] { flex: 1; }
+  .subtask-add-row button { flex-shrink: 0; width: auto; padding: 10px 14px; white-space: nowrap; }
   .cat-pill-row { margin-top: 8px; }
   .cat-pill-row .pill { padding: 5px 10px; font-size: 12px; }
   .btn {
@@ -410,10 +410,10 @@
     <div class="form-group">
       <label>Subtasks</label>
       <div class="subtask-edit-list" id="editSubtaskList"></div>
+      <input type="text" id="editSubtaskInput" placeholder="Nova subtask" style="margin-bottom:8px;">
       <div class="subtask-add-row">
-        <input type="text" id="editSubtaskInput" placeholder="Nova subtask">
         <input type="date" id="editSubtaskDue">
-        <button class="btn" id="editSubtaskAdd" type="button">+</button>
+        <button class="btn" id="editSubtaskAdd" type="button">Adicionar subtask</button>
       </div>
     </div>
     <div class="sheet-actions">
@@ -1005,18 +1005,24 @@
     }
     list.innerHTML = editingTask.subtasks.map((st, idx) => `
       <div class="subtask-edit-row">
-        <div class="checkbox ${st.checked ? 'checked' : ''}" data-action="edit-toggle-sub" data-idx="${idx}"></div>
-        <span class="${st.checked ? 'checked' : ''}">${escapeHtml(st.text)}</span>
-        <input type="date" value="${st.due || ''}" data-action="edit-sub-due" data-idx="${idx}">
-        <button class="subtask-del" data-action="edit-delete-sub" data-idx="${idx}" type="button">&times;</button>
+        <div class="subtask-edit-row-top">
+          <div class="checkbox ${st.checked ? 'checked' : ''}" data-action="edit-toggle-sub" data-idx="${idx}"></div>
+          <span class="${st.checked ? 'checked' : ''}">${escapeHtml(st.text)}</span>
+          <button class="subtask-del" data-action="edit-delete-sub" data-idx="${idx}" type="button">&times;</button>
+        </div>
+        <input type="date" class="subtask-due-input" value="${st.due || ''}" data-action="edit-sub-due" data-idx="${idx}">
       </div>
     `).join('');
     list.querySelectorAll('input[data-action="edit-sub-due"]').forEach(inp => {
-      inp.addEventListener('change', () => {
+      const commit = () => {
         const idx = parseInt(inp.dataset.idx);
+        if (!editingTask.subtasks[idx]) return;
         editingTask.subtasks[idx].due = inp.value || null;
         queuePush();
-      });
+      };
+      inp.addEventListener('change', commit);
+      inp.addEventListener('input', commit);
+      inp.addEventListener('blur', commit);
     });
   }
 
