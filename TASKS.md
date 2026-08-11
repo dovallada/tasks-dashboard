@@ -1,6 +1,7 @@
 # Tasks
 
 ## Backlog
+- [ ] **NEW TEST** - Status: Backlog
 - [ ] **TESTE 524**
 
 ## To Do
