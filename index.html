@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Tasks</title>
+<style>
+  :root {
+    --bg-primary: #faf9f5;
+    --bg-secondary: #F5F4EF;
+    --bg-card: #ffffff;
+    --text-primary: #141413;
+    --text-secondary: #5c5c5a;
+    --text-muted: #8c8c8a;
+    --accent: #D97757;
+    --accent-hover: #c4684a;
+    --border: #e5e4df;
+    --border-light: #eeeee9;
+    --shadow: rgba(20, 20, 19, 0.08);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    padding-bottom: 100px;
+  }
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    padding: calc(env(safe-area-inset-top) + 12px) 16px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  header h1 { font-size: 18px; margin: 0; font-weight: 600; }
+  header .sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .icon-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--text-secondary);
+  }
+  .icon-btn:active { background: var(--bg-secondary); }
+  .header-actions { display: flex; gap: 8px; }
+  main { padding: 12px 14px 24px; }
+  .status-line {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 10px 0;
+  }
+  .section-group { margin-bottom: 18px; }
+  .section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 4px 8px;
+    cursor: pointer;
+  }
+  .section-head h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-count {
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+    border-radius: 20px;
+    padding: 1px 8px;
+    font-size: 11px;
+  }
+  .chevron { color: var(--text-muted); font-size: 12px; transition: transform 0.15s; }
+  .section-group.collapsed .chevron { transform: rotate(-90deg); }
+  .section-group.collapsed .task-row { display: none; }
+  .task-row {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 2px var(--shadow);
+  }
+  .task-row.on-hold { opacity: 0.55; border-style: dashed; }
+  .task-row.overdue { border-left: 3px solid #e0574f; }
+  .task-row-top { display: flex; align-items: flex-start; gap: 10px; }
+  .checkbox {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    margin-top: 1px;
+    position: relative;
+    cursor: pointer;
+  }
+  .checkbox.checked { background: var(--accent); border-color: var(--accent); }
+  .checkbox.checked::after {
+    content: '';
+    position: absolute;
+    left: 6px; top: 2px;
+    width: 5px; height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .task-title { flex: 1; font-size: 15px; line-height: 1.4; cursor: pointer; }
+  .task-title.checked { color: var(--text-muted); text-decoration: line-through; }
+  .hold-toggle {
+    font-size: 13px;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+  }
+  .hold-toggle.active { color: #d97757; }
+  .meta-chips { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0 0 32px; }
+  .meta-chip {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+  .meta-chip-overdue { color: #e0574f; border-color: #e0574f66; }
+  .meta-chip-onhold { color: #d97757; border-color: #d9775766; background: #d977571a; }
+  .meta-chip-clickup { color: var(--accent); border-color: var(--accent); text-decoration: none; }
+  .task-desc { margin: 6px 0 0 32px; font-size: 13px; color: var(--text-muted); }
+  .subtasks { margin: 8px 0 0 32px; }
+  .subtask-row { display: flex; align-items: center; gap: 8px; padding: 3px 0; font-size: 13px; color: var(--text-secondary); }
+  .subtask-row .checkbox { width: 16px; height: 16px; min-width: 16px; border-radius: 4px; }
+  .subtask-row .checkbox.checked::after { left: 4px; top: 1px; width: 3px; height: 7px; }
+  .subtask-row span.checked { text-decoration: line-through; color: var(--text-muted); }
+  .add-btn {
+    position: fixed;
+    right: 20px;
+    bottom: calc(env(safe-area-inset-bottom) + 20px);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    border: none;
+    font-size: 26px;
+    box-shadow: 0 4px 14px rgba(217,119,87,0.4);
+    z-index: 25;
+  }
+  .empty-state { text-align: center; color: var(--text-muted); font-size: 13px; padding: 30px 0; }
+
+  /* sheet / modal */
+  .sheet-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(20,20,19,0.4);
+    z-index: 50;
+    align-items: flex-end;
+  }
+  .sheet-overlay.visible { display: flex; }
+  .sheet {
+    background: var(--bg-primary);
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    border-radius: 18px 18px 0 0;
+    padding: 16px 18px calc(env(safe-area-inset-bottom) + 20px);
+  }
+  .sheet-handle { width: 36px; height: 4px; background: var(--border); border-radius: 4px; margin: 0 auto 14px; }
+  .sheet h3 { margin: 0 0 14px; font-size: 16px; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 15px;
+    font-family: inherit;
+  }
+  .form-group textarea { min-height: 80px; resize: vertical; }
+  .pill-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill {
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .pill.selected { border-color: var(--accent); color: var(--accent); background: #d977571a; }
+  .checkbox-row { display: flex; align-items: center; gap: 10px; }
+  .checkbox-row input { width: auto; }
+  .sheet-actions { display: flex; gap: 10px; margin-top: 18px; }
+  .btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: white; }
+  .btn.danger { color: #e0574f; border-color: #e0574f66; }
+  .helper-text { font-size: 11px; color: var(--text-muted); margin-top: 6px; line-height: 1.4; }
+  .sync-status { font-size: 12px; color: var(--text-muted); margin-top: 10px; min-height: 16px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Tasks</h1>
+    <div class="sub" id="repoLabel"></div>
+  </div>
+  <div class="header-actions">
+    <button class="icon-btn" id="refreshBtn" title="Refresh">&#8635;</button>
+    <button class="icon-btn" id="settingsBtn" title="Settings">&#9881;</button>
+  </div>
+</header>
+
+<main id="main">
+  <div class="status-line" id="statusLine">Carregando...</div>
+</main>
+
+<button class="add-btn" id="addTaskBtn" style="display:none;">+</button>
+
+<!-- SETTINGS SHEET -->
+<div class="sheet-overlay" id="settingsOverlay">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h3>Conectar ao GitHub</h3>
+    <div class="form-group">
+      <label>Repositório (owner/repo)</label>
+      <input type="text" id="cfgRepo" placeholder="dovallada/tasks-dashboard">
+    </div>
+    <div class="form-group">
+      <label>Caminho do arquivo no repo</label>
+      <input type="text" id="cfgPath" placeholder="TASKS.md" value="TASKS.md">
+    </div>
+    <div class="form-group">
+      <label>Personal access token</label>
+      <input type="password" id="cfgToken" placeholder="github_pat_...">
+      <div class="helper-text">Fica salvo só neste navegador (localStorage). Nunca sai daqui.</div>
+    </div>
+    <div class="sync-status" id="settingsStatus"></div>
+    <div class="sheet-actions">
+      <button class="btn" id="settingsCancel">Cancelar</button>
+      <button class="btn primary" id="settingsSave">Salvar e conectar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TASK EDIT SHEET -->
+<div class="sheet-overlay" id="editOverlay">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="form-group">
+      <label>Título</label>
+      <input type="text" id="editTitle">
+    </div>
+    <div class="form-group">
+      <label>Due date</label>
+      <input type="date" id="editDue">
+    </div>
+    <div class="form-group">
+      <label>Prioridade</label>
+      <div class="pill-row" id="editPriority"></div>
+    </div>
+    <div class="form-group">
+      <label>Categoria</label>
+      <input type="text" id="editCategory" placeholder="ex: Trabalho, ou Trabalho/Vídeos">
+    </div>
+    <div class="form-group">
+      <label>Descrição</label>
+      <textarea id="editDesc"></textarea>
+    </div>
+    <div class="form-group checkbox-row">
+      <input type="checkbox" id="editOnHold">
+      <label style="margin:0;">On Hold</label>
+    </div>
+    <div class="sheet-actions">
+      <button class="btn danger" id="editDelete">Excluir</button>
+      <button class="btn" id="editCancel">Cancelar</button>
+      <button class="btn primary" id="editSave">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD TASK SHEET -->
+<div class="sheet-overlay" id="addOverlay">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h3>Nova task</h3>
+    <div class="form-group">
+      <label>Título</label>
+      <input type="text" id="addTitle" placeholder="O que precisa ser feito?">
+    </div>
+    <div class="form-group">
+      <label>Seção</label>
+      <select id="addSection"></select>
+    </div>
+    <div class="sheet-actions">
+      <button class="btn" id="addCancel">Cancelar</button>
+      <button class="btn primary" id="addSave">Adicionar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const PRIORITY_NAMES = { P0: 'Urgent', P1: 'High', P2: 'Medium', P3: 'Low' };
+  const PRIORITY_COLORS = { P0: '#e0574f', P1: '#d97757', P2: '#c9a227', P3: '#5c9d6c', none: '#8c8c8a' };
+  const CATEGORY_PALETTE = ['#d97757','#5c9d6c','#4a90d9','#b06fc9','#c9a227','#4fb0a5','#d95f9e','#8c8c8a'];
+
+  let sections = [];
+  let tasks = {};
+  let currentSha = null;
+  let cfg = { repo: '', path: 'TASKS.md', token: '' };
+  let collapsedSections = JSON.parse(localStorage.getItem('mobileCollapsed') || '{}');
+  let editingTask = null;
+
+  const el = id => document.getElementById(id);
+  const escapeHtml = s => (s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  function loadConfig() {
+    try { cfg = JSON.parse(localStorage.getItem('githubTaskSync') || '{}'); } catch(e) { cfg = {}; }
+    if (!cfg.path) cfg.path = 'TASKS.md';
+  }
+
+  function saveConfig() {
+    localStorage.setItem('githubTaskSync', JSON.stringify(cfg));
+  }
+
+  function isConfigured() {
+    return cfg.repo && cfg.token;
+  }
+
+  function utf8ToBase64(str) { return btoa(unescape(encodeURIComponent(str))); }
+  function base64ToUtf8(b64) { return decodeURIComponent(escape(atob(b64.replace(/\n/g, '')))); }
+
+  function taskSectionId(name) {
+    return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  }
+
+  function parseTaskMarkdown(content) {
+    const resultSections = [];
+    const resultTasks = {};
+    let currentSectionId = null;
+    let currentTask = null;
+    const lines = content.split('\n');
+
+    for (const line of lines) {
+      const headerMatch = line.match(/^## \*{0,2}(.+?)\*{0,2}$/);
+      if (headerMatch) {
+        if (currentTask && currentSectionId) { resultTasks[currentSectionId].push(currentTask); currentTask = null; }
+        const sectionName = headerMatch[1].trim();
+        currentSectionId = taskSectionId(sectionName);
+        if (!resultTasks[currentSectionId]) {
+          resultSections.push({ id: currentSectionId, name: sectionName });
+          resultTasks[currentSectionId] = [];
+        }
+      } else if (currentSectionId && line.match(/^- \[[ xX]\]/)) {
+        if (currentTask) resultTasks[currentSectionId].push(currentTask);
+        const checked = line.match(/\[[xX]\]/) !== null;
+        let text = line.replace(/^- \[[ xX]\]\s*/, '');
+        let title = text, note = '';
+        const boldMatch = text.match(/^\*\*(.+?)\*\*(.*)$/);
+        if (boldMatch) { title = boldMatch[1]; note = boldMatch[2].replace(/^\s*-\s*/, '').trim(); }
+        currentTask = { id: Date.now() + Math.random(), title, note, checked, subtasks: [], section: currentSectionId };
+      } else if (currentTask && line.match(/^\s+- \[[ xX]\]/)) {
+        const checked = line.match(/\[[xX]\]/) !== null;
+        let text = line.replace(/^\s+- \[[ xX]\]\s*/, '');
+        let due = null;
+        const dueMatch = text.match(/\s*\(Due:\s*(\d{4}-\d{2}-\d{2})\)\s*$/i);
+        if (dueMatch) { due = dueMatch[1]; text = text.slice(0, dueMatch.index); }
+        currentTask.subtasks.push({ text, checked, due });
+      }
+    }
+    if (currentTask && currentSectionId) resultTasks[currentSectionId].push(currentTask);
+    return { sections: resultSections, tasks: resultTasks };
+  }
+
+  function toMarkdown() {
+    let md = '# Tasks\n';
+    sections.forEach(section => {
+      md += `\n## ${section.name}\n`;
+      (tasks[section.id] || []).forEach(t => {
+        const checkbox = t.checked ? '[x]' : '[ ]';
+        const note = t.note ? ` - ${t.note}` : '';
+        md += `- ${checkbox} **${t.title}**${note}\n`;
+        t.subtasks.forEach(st => {
+          const stCheckbox = st.checked ? '[x]' : '[ ]';
+          const stDue = st.due ? ` (Due: ${st.due})` : '';
+          md += `  - ${stCheckbox} ${st.text}${stDue}\n`;
+        });
+      });
+    });
+    return md.trimEnd() + '\n';
+  }
+
+  function parseTaskMeta(note) {
+    const meta = { due: null, priority: null, category: null, clickupId: null, onHold: false, extra: '' };
+    if (!note) return meta;
+    let rest = note;
+    const onHoldMatch = rest.match(/OnHold:\s*true/i);
+    if (onHoldMatch) { meta.onHold = true; rest = rest.replace(onHoldMatch[0], ''); }
+    const dueMatch = rest.match(/Due:\s*\d{4}-\d{2}-\d{2}(?:\s*\([^)]*\))?/i);
+    if (dueMatch) { meta.due = dueMatch[0].match(/\d{4}-\d{2}-\d{2}/)[0]; rest = rest.replace(dueMatch[0], ''); }
+    const prioMatch = rest.match(/Priority:\s*P[0-3]/i);
+    if (prioMatch) { meta.priority = prioMatch[0].match(/P[0-3]/i)[0].toUpperCase(); rest = rest.replace(prioMatch[0], ''); }
+    const catMatch = rest.match(/Category:\s*[^·—]+/i);
+    if (catMatch) { meta.category = catMatch[0].replace(/Category:\s*/i, '').trim(); rest = rest.replace(catMatch[0], ''); }
+    const statusMatch = rest.match(/Status:\s*[^·—]+/i);
+    if (statusMatch) rest = rest.replace(statusMatch[0], '');
+    const clickupMatch = rest.match(/ClickUp:\s*\S+/i);
+    if (clickupMatch) { meta.clickupId = clickupMatch[0].replace(/ClickUp:\s*/i, '').trim(); rest = rest.replace(clickupMatch[0], ''); }
+    rest = rest.replace(/^[\s·—-]+|[\s·—-]+$/g, '').replace(/\s*·\s*·\s*/g, ' · ').trim();
+    rest = rest.replace(/^Description:\s*/i, '');
+    meta.extra = rest;
+    return meta;
+  }
+
+  function rebuildNoteFromMeta(meta, task) {
+    const parts = [];
+    if (meta.due) {
+      const [y, m, d] = meta.due.split('-').map(Number);
+      const weekday = new Date(y, m - 1, d).toLocaleDateString('en-US', { weekday: 'short' });
+      parts.push(`Due: ${meta.due} (${weekday})`);
+    }
+    if (meta.priority) parts.push(`Priority: ${meta.priority}`);
+    if (meta.category) parts.push(`Category: ${meta.category}`);
+    const sectionName = sections.find(s => s.id === task.section)?.name;
+    if (sectionName) parts.push(`Status: ${sectionName}`);
+    if (meta.onHold) parts.push(`OnHold: true`);
+    if (meta.clickupId) parts.push(`ClickUp: ${meta.clickupId}`);
+    let note = parts.join(' · ');
+    if (meta.extra) note += (note ? ' — ' : '') + `Description: ${meta.extra}`;
+    return note;
+  }
+
+  function isOverdueStr(dueStr, checked) {
+    if (!dueStr || checked) return false;
+    return dueStr < formatDateLocal(new Date());
+  }
+
+  function formatDateLocal(d) {
+    const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), day = String(d.getDate()).padStart(2,'0');
+    return `${y}-${m}-${day}`;
+  }
+
+  function formatDueLabel(dueStr) {
+    const today = formatDateLocal(new Date());
+    const tomorrow = formatDateLocal(new Date(Date.now() + 86400000));
+    const yesterday = formatDateLocal(new Date(Date.now() - 86400000));
+    if (dueStr === today) return 'Hoje';
+    if (dueStr === tomorrow) return 'Amanhã';
+    if (dueStr === yesterday) return 'Ontem';
+    const [y, m, d] = dueStr.split('-').map(Number);
+    return new Date(y, m - 1, d).toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' });
+  }
+
+  function hashString(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) { hash = (hash << 5) - hash + str.charCodeAt(i); hash |= 0; }
+    return Math.abs(hash);
+  }
+
+  function categoryColor(cat) {
+    if (!cat) return '#8c8c8a';
+    const parent = cat.split('/')[0].trim();
+    return CATEGORY_PALETTE[hashString(parent) % CATEGORY_PALETTE.length];
+  }
+
+  function categoryDisplayLabel(cat) {
+    const idx = cat.indexOf('/');
+    if (idx === -1) return cat;
+    return `${cat.slice(0, idx).trim()} › ${cat.slice(idx + 1).trim()}`;
+  }
+
+  function findOrCreateDoneSection() {
+    let doneSection = sections.find(s => s.name.trim().toLowerCase() === 'done');
+    if (!doneSection) {
+      doneSection = { id: taskSectionId('Done'), name: 'Done' };
+      sections.push(doneSection);
+    }
+    if (!tasks[doneSection.id]) tasks[doneSection.id] = [];
+    return doneSection;
+  }
+
+  function moveTaskToDone(task) {
+    const doneSection = findOrCreateDoneSection();
+    if (task.section === doneSection.id) return;
+    for (const section of sections) {
+      const arr = tasks[section.id] || [];
+      const idx = arr.findIndex(t => t.id === task.id);
+      if (idx !== -1) { arr.splice(idx, 1); break; }
+    }
+    task.section = doneSection.id;
+    tasks[doneSection.id].unshift(task);
+    task.note = rebuildNoteFromMeta(parseTaskMeta(task.note), task);
+  }
+
+  function toggleTaskChecked(task) {
+    task.checked = !task.checked;
+    if (task.checked) moveTaskToDone(task);
+    render();
+    queuePush();
+  }
+
+  function toggleTaskOnHold(task) {
+    const meta = parseTaskMeta(task.note);
+    meta.onHold = !meta.onHold;
+    task.note = rebuildNoteFromMeta(meta, task);
+    if (meta.onHold) {
+      const arr = tasks[task.section] || [];
+      const idx = arr.findIndex(t => t.id === task.id);
+      if (idx !== -1) { arr.splice(idx, 1); arr.push(task); }
+    }
+    render();
+    queuePush();
+  }
+
+  function toggleSubtask(task, idx) {
+    task.subtasks[idx].checked = !task.subtasks[idx].checked;
+    render();
+    queuePush();
+  }
+
+  function deleteTaskById(task) {
+    const arr = tasks[task.section] || [];
+    const idx = arr.findIndex(t => t.id === task.id);
+    if (idx !== -1) arr.splice(idx, 1);
+    render();
+    queuePush();
+  }
+
+  // ===== Rendering =====
+  function render() {
+    const main = el('main');
+    if (!isConfigured()) {
+      main.innerHTML = '<div class="empty-state">Toque na engrenagem para conectar ao GitHub.</div>';
+      el('addTaskBtn').style.display = 'none';
+      return;
+    }
+    el('addTaskBtn').style.display = 'block';
+    el('repoLabel').textContent = cfg.repo;
+
+    if (sections.length === 0) {
+      main.innerHTML = '<div class="empty-state">Nenhuma task ainda.</div>';
+      return;
+    }
+
+    let html = '';
+    sections.forEach(section => {
+      const list = tasks[section.id] || [];
+      const collapsed = collapsedSections[section.id] ? ' collapsed' : '';
+      html += `<div class="section-group${collapsed}" data-section="${section.id}">
+        <div class="section-head" data-action="toggle-section" data-section="${section.id}">
+          <h2><span class="chevron">&#9660;</span>${escapeHtml(section.name)}<span class="section-count">${list.length}</span></h2>
+        </div>`;
+      if (list.length === 0) {
+        html += `<div class="empty-state" style="padding:6px 0 12px;">Vazio</div>`;
+      }
+      list.forEach(t => {
+        const meta = parseTaskMeta(t.note);
+        const overdue = isOverdueStr(meta.due, t.checked);
+        html += `<div class="task-row${overdue ? ' overdue' : ''}${meta.onHold ? ' on-hold' : ''}" data-id="${t.id}">
+          <div class="task-row-top">
+            <div class="checkbox ${t.checked ? 'checked' : ''}" data-action="toggle" data-id="${t.id}"></div>
+            <div class="task-title ${t.checked ? 'checked' : ''}" data-action="edit" data-id="${t.id}">${escapeHtml(t.title)}</div>
+            <button class="hold-toggle ${meta.onHold ? 'active' : ''}" data-action="toggle-hold" data-id="${t.id}">&#9208;</button>
+          </div>`;
+
+        let chips = '';
+        if (meta.onHold) chips += `<span class="meta-chip meta-chip-onhold">&#9208; On Hold</span>`;
+        if (meta.due) chips += `<span class="meta-chip${overdue ? ' meta-chip-overdue' : ''}">${escapeHtml(formatDueLabel(meta.due))}</span>`;
+        if (meta.priority) chips += `<span class="meta-chip" style="color:${PRIORITY_COLORS[meta.priority]}; border-color:${PRIORITY_COLORS[meta.priority]}66;">${PRIORITY_NAMES[meta.priority]}</span>`;
+        if (meta.category) {
+          const c = categoryColor(meta.category);
+          chips += `<span class="meta-chip" style="color:${c}; border-color:${c}66; background:${c}1a;">${escapeHtml(categoryDisplayLabel(meta.category))}</span>`;
+        }
+        if (meta.clickupId) chips += `<a class="meta-chip meta-chip-clickup" href="https://app.clickup.com/t/${encodeURIComponent(meta.clickupId)}" target="_blank" rel="noopener">ClickUp &#8599;</a>`;
+        if (chips) html += `<div class="meta-chips">${chips}</div>`;
+        if (meta.extra) html += `<div class="task-desc">${escapeHtml(meta.extra)}</div>`;
+
+        if (t.subtasks && t.subtasks.length > 0) {
+          html += `<div class="subtasks">`;
+          t.subtasks.forEach((st, idx) => {
+            html += `<div class="subtask-row">
+              <div class="checkbox ${st.checked ? 'checked' : ''}" data-action="toggle-sub" data-id="${t.id}" data-idx="${idx}"></div>
+              <span class="${st.checked ? 'checked' : ''}">${escapeHtml(st.text)}</span>
+            </div>`;
+          });
+          html += `</div>`;
+        }
+        html += `</div>`;
+      });
+      html += `</div>`;
+    });
+    main.innerHTML = html;
+  }
+
+  document.addEventListener('click', (e) => {
+    const actionEl = e.target.closest('[data-action]');
+    if (!actionEl) return;
+    const action = actionEl.dataset.action;
+    if (action === 'toggle-section') {
+      const sid = actionEl.dataset.section;
+      collapsedSections[sid] = !collapsedSections[sid];
+      localStorage.setItem('mobileCollapsed', JSON.stringify(collapsedSections));
+      render();
+      return;
+    }
+    const id = actionEl.dataset.id;
+    if (!id) return;
+    const task = findTaskById(id);
+    if (!task) return;
+    if (action === 'toggle') toggleTaskChecked(task);
+    else if (action === 'toggle-hold') toggleTaskOnHold(task);
+    else if (action === 'toggle-sub') toggleSubtask(task, parseInt(actionEl.dataset.idx));
+    else if (action === 'edit') openEditSheet(task);
+  });
+
+  function findTaskById(id) {
+    for (const s of sections) {
+      const found = (tasks[s.id] || []).find(t => String(t.id) === String(id));
+      if (found) return found;
+    }
+    return null;
+  }
+
+  // ===== Edit sheet =====
+  function openEditSheet(task) {
+    editingTask = task;
+    const meta = parseTaskMeta(task.note);
+    el('editTitle').value = task.title;
+    el('editDue').value = meta.due || '';
+    el('editCategory').value = meta.category || '';
+    el('editDesc').value = meta.extra || '';
+    el('editOnHold').checked = !!meta.onHold;
+    buildPriorityPills(meta.priority || '');
+    el('editOverlay').classList.add('visible');
+  }
+
+  function buildPriorityPills(selected) {
+    const row = el('editPriority');
+    row.dataset.selected = selected;
+    row.innerHTML = Object.keys(PRIORITY_NAMES).map(p =>
+      `<div class="pill${p === selected ? ' selected' : ''}" data-p="${p}">${PRIORITY_NAMES[p]}</div>`
+    ).join('') + `<div class="pill${selected === '' ? ' selected' : ''}" data-p="">Nenhuma</div>`;
+    row.querySelectorAll('.pill').forEach(pill => {
+      pill.addEventListener('click', () => { buildPriorityPills(pill.dataset.p); });
+    });
+  }
+
+  el('editCancel').addEventListener('click', () => { el('editOverlay').classList.remove('visible'); editingTask = null; });
+  el('editOverlay').addEventListener('click', (e) => { if (e.target.id === 'editOverlay') { el('editOverlay').classList.remove('visible'); editingTask = null; } });
+
+  el('editSave').addEventListener('click', () => {
+    if (!editingTask) return;
+    const meta = parseTaskMeta(editingTask.note);
+    meta.due = el('editDue').value || null;
+    meta.priority = el('editPriority').dataset.selected || null;
+    meta.category = el('editCategory').value.trim() || null;
+    meta.extra = el('editDesc').value.trim();
+    meta.onHold = el('editOnHold').checked;
+    editingTask.title = el('editTitle').value.trim() || editingTask.title;
+    editingTask.note = rebuildNoteFromMeta(meta, editingTask);
+    el('editOverlay').classList.remove('visible');
+    editingTask = null;
+    render();
+    queuePush();
+  });
+
+  el('editDelete').addEventListener('click', () => {
+    if (!editingTask) return;
+    if (!confirm(`Excluir "${editingTask.title}"?`)) return;
+    deleteTaskById(editingTask);
+    el('editOverlay').classList.remove('visible');
+    editingTask = null;
+  });
+
+  // ===== Add task sheet =====
+  el('addTaskBtn').addEventListener('click', () => {
+    el('addTitle').value = '';
+    const sel = el('addSection');
+    sel.innerHTML = sections.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
+    el('addOverlay').classList.add('visible');
+  });
+  el('addCancel').addEventListener('click', () => el('addOverlay').classList.remove('visible'));
+  el('addOverlay').addEventListener('click', (e) => { if (e.target.id === 'addOverlay') el('addOverlay').classList.remove('visible'); });
+  el('addSave').addEventListener('click', () => {
+    const title = el('addTitle').value.trim();
+    if (!title) return;
+    const sectionId = el('addSection').value;
+    const sectionName = sections.find(s => s.id === sectionId)?.name || sectionId;
+    const task = { id: Date.now() + Math.random(), title, note: `Status: ${sectionName}`, checked: false, subtasks: [], section: sectionId };
+    if (!tasks[sectionId]) tasks[sectionId] = [];
+    tasks[sectionId].unshift(task);
+    el('addOverlay').classList.remove('visible');
+    render();
+    queuePush();
+  });
+
+  // ===== Settings sheet =====
+  el('settingsBtn').addEventListener('click', () => {
+    el('cfgRepo').value = cfg.repo || '';
+    el('cfgPath').value = cfg.path || 'TASKS.md';
+    el('cfgToken').value = cfg.token || '';
+    el('settingsStatus').textContent = '';
+    el('settingsOverlay').classList.add('visible');
+  });
+  el('settingsCancel').addEventListener('click', () => el('settingsOverlay').classList.remove('visible'));
+  el('settingsOverlay').addEventListener('click', (e) => { if (e.target.id === 'settingsOverlay') el('settingsOverlay').classList.remove('visible'); });
+  el('settingsSave').addEventListener('click', async () => {
+    cfg.repo = el('cfgRepo').value.trim();
+    cfg.path = el('cfgPath').value.trim() || 'TASKS.md';
+    cfg.token = el('cfgToken').value.trim();
+    saveConfig();
+    el('settingsStatus').textContent = 'Conectando...';
+    try {
+      await pullFromGithub();
+      el('settingsStatus').textContent = 'Conectado!';
+      setTimeout(() => el('settingsOverlay').classList.remove('visible'), 600);
+    } catch (e) {
+      el('settingsStatus').textContent = 'Erro: ' + e.message;
+    }
+  });
+
+  el('refreshBtn').addEventListener('click', async () => {
+    if (!isConfigured()) { el('settingsBtn').click(); return; }
+    el('statusLine').style.display = 'block';
+    el('statusLine').textContent = 'Atualizando...';
+    try {
+      await pullFromGithub();
+      el('statusLine').style.display = 'none';
+    } catch (e) {
+      el('statusLine').textContent = 'Erro: ' + e.message;
+    }
+  });
+
+  // ===== GitHub API =====
+  function ghHeaders() {
+    return {
+      'Authorization': `Bearer ${cfg.token}`,
+      'Accept': 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28'
+    };
+  }
+
+  function ghUrl() {
+    return `https://api.github.com/repos/${cfg.repo}/contents/${encodeURIComponent(cfg.path).replace(/%2F/g, '/')}`;
+  }
+
+  async function pullFromGithub() {
+    const res = await fetch(ghUrl(), { headers: ghHeaders() });
+    if (res.status === 404) {
+      // file doesn't exist yet — start empty, will be created on first push
+      currentSha = null;
+      sections = [];
+      tasks = {};
+      render();
+      return;
+    }
+    if (!res.ok) throw new Error(`GitHub ${res.status}`);
+    const data = await res.json();
+    currentSha = data.sha;
+    const content = base64ToUtf8(data.content);
+    const parsed = parseTaskMarkdown(content);
+    sections = parsed.sections;
+    tasks = parsed.tasks;
+    render();
+  }
+
+  let pushTimeout = null;
+  function queuePush() {
+    if (pushTimeout) clearTimeout(pushTimeout);
+    pushTimeout = setTimeout(pushToGithub, 700);
+  }
+
+  async function pushToGithub() {
+    if (!isConfigured()) return;
+    el('statusLine').style.display = 'block';
+    el('statusLine').textContent = 'Sincronizando...';
+    try {
+      const content = toMarkdown();
+      const body = {
+        message: 'Update tasks from mobile',
+        content: utf8ToBase64(content)
+      };
+      if (currentSha) body.sha = currentSha;
+      const res = await fetch(ghUrl(), {
+        method: 'PUT',
+        headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || `HTTP ${res.status}`);
+      }
+      const data = await res.json();
+      currentSha = data.content.sha;
+      el('statusLine').textContent = 'Sincronizado';
+      setTimeout(() => { el('statusLine').style.display = 'none'; }, 1200);
+    } catch (e) {
+      el('statusLine').textContent = 'Erro ao sincronizar: ' + e.message;
+    }
+  }
+
+  // ===== Init =====
+  loadConfig();
+  if (isConfigured()) {
+    render();
+    pullFromGithub().catch(e => {
+      el('statusLine').style.display = 'block';
+      el('statusLine').textContent = 'Erro: ' + e.message;
+    });
+  } else {
+    render();
+  }
+</script>
+</body>
+</html>
