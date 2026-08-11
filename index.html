@@ -1198,6 +1198,7 @@
   }
 
   let pushTimeout = null;
+  let pushInFlight = false;
   function queuePush() {
     if (pushTimeout) clearTimeout(pushTimeout);
     pushTimeout = setTimeout(pushToGithub, 700);
@@ -1205,6 +1206,8 @@
 
   async function pushToGithub() {
     if (!isConfigured()) return;
+    pushTimeout = null;
+    pushInFlight = true;
     setStatusLine('Sincronizando...', true);
     try {
       const content = toMarkdown();
@@ -1228,8 +1231,30 @@
       setTimeout(() => { setStatusLine('', false); }, 1200);
     } catch (e) {
       setStatusLine('Erro ao sincronizar: ' + e.message, true);
+    } finally {
+      pushInFlight = false;
     }
   }
+
+  // ===== Automatic background pull =====
+  // Picks up changes made on desktop without needing the refresh button.
+  // Skipped whenever a sheet is open, a drag is in progress, or a push is
+  // pending/in flight — those all hold live references into `tasks` that a
+  // pull would otherwise swap out from under the user.
+  function autoPullBlocked() {
+    if (!isConfigured()) return true;
+    if (editingTask) return true;
+    if (pushTimeout || pushInFlight) return true;
+    if (dragState) return true;
+    if (document.hidden) return true;
+    const openSheet = document.querySelector('.sheet-overlay.visible');
+    if (openSheet) return true;
+    return false;
+  }
+  setInterval(() => {
+    if (autoPullBlocked()) return;
+    pullFromGithub().catch(() => { /* silent — next tick retries */ });
+  }, 20000);
 
   // ===== Init =====
   loadConfig();
