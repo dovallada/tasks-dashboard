@@ -1,6 +1,7 @@
 # Tasks
 
 ## Backlog
+- [ ] **Falar Lua parcerias** - Due: 2026-08-11 (Tue) · Priority: P3 · Category: 1000vall/1000hz · Status: Backlog
 
 ## To Do
 - [ ] **ANGEL** - Due: 2026-08-11 (Tue) · Priority: P0 · Category: 1000vall/angel · Status: To Do
@@ -12,7 +13,6 @@
 - [ ] **VAI ME VICIAR** - Priority: P0 · Category: 1000vall/vaimeviciar · Status: To Do
   - [ ] Mandar Rubel > luigi (Due: 0002-08-11)
 - [ ] **Ver com lukinhas/carlozs pagamentos** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do — Description: Criar grupo sem george pra discutir
-1000/3
 
 ## In Progress
 - [ ] **08-05_AI UGC Explainer** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajwjjf1
