@@ -12,26 +12,26 @@
 - [ ] **VAI ME VICIAR** - Priority: P0 · Category: 1000vall/vaimeviciar · Status: To Do
   - [ ] Mandar Rubel > luigi (Due: 0002-08-11)
 - [ ] **TEST**
+- [ ] **08-05_AI UGC Explainer** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajwjjf1
 
 ## In Progress
-- [ ] **08-05_AI UGC Explainer** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajwjjf1
-- [ ] **07-29_Brand Repository Videos + Motion Starter Pack Project** - Due: 2026-08-04 (Tue) · Priority: P3 · Category: Willow/Video Workspace · Status: In Progress · OnHold: true · ClickUp: 86adzx1x6
+- [ ] **07-29_Brand Repository Videos + Motion Starter Pack Project** - Due: 2026-08-04 (Tue) · Category: Willow/Video Workspace · Status: In Progress · ClickUp: 86adzx1x6
 
 ## Done
-- [x] **How GLP-1s Work** - Category: Willow/Videos · Status: Done · ClickUp: 86ah2mmvq
-- [x] **01/28 Video Team Style Test Variation 1** - Due: 2026-02-04 (Wed) · Priority: P1 · Category: Willow/Video Workspace · Status: Done · ClickUp: 86aey56mc
-- [x] **03-12_AI Music Videos** - Due: 2026-03-17 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ag4pewm
-- [x] **03-26_AI Cartoons** - Due: 2026-03-31 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86agfmvnr
-- [x] **Commercial Testimonial** - Due: 2026-04-15 (Wed) · Priority: P0 · Category: Willow/Video Workspace · Status: Done · ClickUp: 86agfaywx
-- [x] **Commercial Value Props** - Due: 2026-04-15 (Wed) · Priority: P0 · Category: Willow/Master Design Team Board · Status: Done · ClickUp: 86agfaz0v
-- [x] **04-23_How GLP-1s Work** - Due: 2026-05-05 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ah2mn4z
-- [x] **04-23_Text Popups** - Due: 2026-05-05 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ah2mn6n
-- [x] **05/07 AI Cartoon Parodies** - Due: 2026-05-12 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ahc84we
-- [x] **05-28_AI Songs** - Due: 2026-06-02 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ah2mn7c
-- [x] **06-02_AI Iterations PT 2** - Due: 2026-06-09 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ahwkvn3
-- [x] **06-11_AI News Stories** - Due: 2026-06-16 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86aj02p84
-- [x] **6-17_Scientific Explainers** - Due: 2026-06-30 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86aj42tjq
 - [x] **07-09_AI Iterations** - Due: 2026-07-14 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ajey7d5
+- [x] **6-17_Scientific Explainers** - Due: 2026-06-30 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86aj42tjq
+- [x] **06-11_AI News Stories** - Due: 2026-06-16 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86aj02p84
+- [x] **06-02_AI Iterations PT 2** - Due: 2026-06-09 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ahwkvn3
+- [x] **05-28_AI Songs** - Due: 2026-06-02 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ah2mn7c
+- [x] **05/07 AI Cartoon Parodies** - Due: 2026-05-12 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ahc84we
+- [x] **04-23_Text Popups** - Due: 2026-05-05 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ah2mn6n
+- [x] **04-23_How GLP-1s Work** - Due: 2026-05-05 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ah2mn4z
+- [x] **Commercial Value Props** - Due: 2026-04-15 (Wed) · Priority: P0 · Category: Willow/Master Design Team Board · Status: Done · ClickUp: 86agfaz0v
+- [x] **Commercial Testimonial** - Due: 2026-04-15 (Wed) · Priority: P0 · Category: Willow/Video Workspace · Status: Done · ClickUp: 86agfaywx
+- [x] **03-26_AI Cartoons** - Due: 2026-03-31 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86agfmvnr
+- [x] **03-12_AI Music Videos** - Due: 2026-03-17 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ag4pewm
+- [x] **01/28 Video Team Style Test Variation 1** - Due: 2026-02-04 (Wed) · Priority: P1 · Category: Willow/Video Workspace · Status: Done · ClickUp: 86aey56mc
+- [x] **How GLP-1s Work** - Category: Willow/Videos · Status: Done · ClickUp: 86ah2mmvq
 - [x] **06-23_FDA Priority Update** - Due: 2026-06-26 (Fri) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86aj6tup2
 - [x] **06-02_AI Collab Workshop Slides** - Due: 2026-06-09 (Tue) · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ahv6ap4
 - [x] **In-Flight Wellness Announcement: GLP-1 Side Effects (educational)** - Due: 2026-07-23 (Thu) · Priority: P2 · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ajb22hm
