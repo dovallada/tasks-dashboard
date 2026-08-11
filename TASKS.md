@@ -1,12 +1,12 @@
 # Tasks
 
 ## Backlog
-- [ ] **Reels Teste - AI QUE LOUCURA** - Due: 2026-08-11 (Tue) · Priority: P2 · Category: 1000vall/social · Status: Backlog — Description: Mandar Reels Teste + tiktok variaçoes
 - [ ] **TEST MOBILE 6** - Status: Backlog
 - [ ] **TESTE 524**
 - [ ] **TEST DESK 7**
 
 ## To Do
+- [ ] **Reels Teste - AI QUE LOUCURA** - Due: 2026-08-11 (Tue) · Priority: P2 · Category: 1000vall/social · Status: To Do — Description: Mandar Reels Teste + tiktok variaçoes
 - [ ] **Falar Flor - Angel** - Due: 2026-08-11 (Tue) · Priority: P0 · Category: 1000vall/angel · Status: To Do
 - [ ] **Ouvir 1000hz nova versao fili** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: 1000vall/1000hz · Status: To Do
 - [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
