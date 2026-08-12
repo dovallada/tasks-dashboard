@@ -12,10 +12,10 @@
 - [ ] **Reels Teste - AI QUE LOUCURA** - Due: 2026-08-11 (Tue) · Priority: P2 · Category: 1000vall/social · Status: To Do — Description: Mandar Reels Teste + tiktok variaçoes
 - [ ] **ANGEL** - Due: 2026-08-11 (Tue) · Category: 1000vall/angel · Status: To Do · OnHold: true
   - [ ] Combinar Prod Flor (Due: 0002-08-11)
-- [ ] **VAI ME VICIAR** - Priority: P0 · Category: 1000vall/vaimeviciar · Status: To Do · OnHold: true
-  - [x] Mandar Rubel > luigi (Due: 0002-08-11)
 - [ ] **1000hz** - Priority: P1 · Category: 1000vall/1000hz · Status: To Do
   - [ ] Falar Lukinhas mix (Due: 0002-08-12)
+- [ ] **VAI ME VICIAR** - Priority: P0 · Category: 1000vall/vaimeviciar · Status: To Do · OnHold: true
+  - [x] Mandar Rubel > luigi (Due: 0002-08-11)
 - [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do · OnHold: true
   - [x] Responder Freitas (Due: 0002-08-11)
 - [ ] **Ver com lukinhas/carlozs pagamentos** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do · OnHold: true — Description: Criar grupo sem george pra discutir
