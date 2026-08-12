@@ -3,7 +3,7 @@
 ## Backlog
 - [ ] **Ideias Jogos Apps  Sites** - Due: 2026-08-11 (Tue) · Priority: P2 · Category: 1000vall/1000hz · Status: Backlog — Description: Ideias jogos sites apps
 - [ ] **Falar Lua parcerias** - Due: 2026-08-11 (Tue) · Priority: P3 · Category: 1000vall/1000hz · Status: Backlog
-- [ ] **Subir projetos drop** - Priority: P1 · Category: Willow/Video Projects · Status: Backlog
+- [ ] **Subir projetos drop** - Priority: P1 · Category: Willow · Status: Backlog
 
 ## To Do
 - [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
