@@ -6,11 +6,11 @@
 - [ ] **Subir projetos drop** - Priority: P1 · Category: Willow/Video Projects · Status: Backlog
 
 ## To Do
+- [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
+  - [x] Responder Freitas (Due: 0002-08-11)
 - [ ] **Ver prêmios Rifa** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: life · Status: To Do
   - [ ] Falar Giu
   - [ ] Falar Hy
-- [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
-  - [x] Responder Freitas (Due: 0002-08-11)
 - [ ] **Reels Teste - AI QUE LOUCURA** - Due: 2026-08-11 (Tue) · Priority: P2 · Category: 1000vall/social · Status: To Do — Description: Mandar Reels Teste + tiktok variaçoes
 - [ ] **Ver com lukinhas/carlozs pagamentos** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do — Description: Criar grupo sem george pra discutir
 - [ ] **ANGEL** - Due: 2026-08-11 (Tue) · Category: 1000vall/angel · Status: To Do · OnHold: true
