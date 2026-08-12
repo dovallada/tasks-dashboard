@@ -6,8 +6,6 @@
 - [ ] **Subir projetos drop** - Priority: P1 · Category: Willow · Status: Backlog
 
 ## To Do
-- [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
-  - [x] Responder Freitas (Due: 0002-08-11)
 - [ ] **Ver prêmios Rifa** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: life · Status: To Do
   - [ ] Falar Giu
   - [ ] Falar Hy
@@ -19,6 +17,8 @@
   - [x] Mandar Rubel > luigi (Due: 0002-08-11)
 - [ ] **1000hz** - Priority: P1 · Category: 1000vall/1000hz · Status: To Do
   - [ ] Falar Lukinhas mix (Due: 0002-08-12)
+- [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do · OnHold: true
+  - [x] Responder Freitas (Due: 0002-08-11)
 
 ## In Progress
 - [ ] **08-05_AI UGC Explainer** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajwjjf1
