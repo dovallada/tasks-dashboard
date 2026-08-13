@@ -4,12 +4,12 @@
 - [ ] **Ideias Jogos Apps  Sites** - Due: 2026-08-11 (Tue) · Priority: P2 · Category: 1000vall/1000hz · Status: Backlog — Description: Ideias jogos sites apps
 - [ ] **Falar Lua parcerias** - Due: 2026-08-11 (Tue) · Priority: P3 · Category: 1000vall/1000hz · Status: Backlog
 - [ ] **Subir projetos drop** - Priority: P1 · Category: Willow · Status: Backlog
+- [ ] **Ver com lukinhas/carlozs pagamentos** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do — Description: Criar grupo sem george pra discutir
 
 ## To Do
 - [ ] **Reels Teste - AI QUE LOUCURA** - Due: 2026-08-11 (Tue) · Priority: P2 · Category: 1000vall/social · Status: To Do — Description: Mandar Reels Teste + tiktok variaçoes
 - [ ] **ANGEL** - Due: 2026-08-11 (Tue) · Category: 1000vall/angel · Status: To Do · OnHold: true
   - [ ] Combinar Prod Flor (Due: 0002-08-11)
-- [ ] **Ver com lukinhas/carlozs pagamentos** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do — Description: Criar grupo sem george pra discutir
 
 ## In Progress
 - [ ] **08-05_AI UGC Explainer** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajwjjf1
