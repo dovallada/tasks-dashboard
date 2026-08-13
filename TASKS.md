@@ -12,7 +12,7 @@
 - [ ] **1000hz** - Priority: P1 · Category: 1000vall/1000hz · Status: To Do
   - [x] Falar Lukinhas mix (Due: 0002-08-12)
   - [ ] Mandar final bgreal
-- [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do · OnHold: true
+- [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
   - [x] Responder Freitas (Due: 0002-08-11)
 - [ ] **Ver com lukinhas/carlozs pagamentos** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do · OnHold: true — Description: Criar grupo sem george pra discutir
 
