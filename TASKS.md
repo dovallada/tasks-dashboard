@@ -15,7 +15,7 @@
 - [ ] **1000hz** - Priority: P1 · Category: 1000vall/1000hz · Status: To Do
   - [x] Falar Lukinhas mix (Due: 0002-08-12)
   - [ ] Mandar final bgreal
-- [ ] **VAI ME VICIAR** - Priority: P0 · Category: 1000vall/vaimeviciar · Status: To Do · OnHold: true
+- [ ] **VAI ME VICIAR** - Priority: P0 · Category: 1000vall/vaimeviciar · Status: To Do
   - [x] Mandar Rubel > luigi (Due: 0002-08-11)
 - [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do · OnHold: true
   - [x] Responder Freitas (Due: 0002-08-11)
