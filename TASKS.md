@@ -12,12 +12,12 @@
 - [ ] **1000hz** - Priority: P1 · Category: 1000vall/1000hz · Status: To Do
   - [x] Falar Lukinhas mix (Due: 0002-08-12)
   - [ ] Mandar final bgreal
-- [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
-  - [x] Responder Freitas (Due: 0002-08-11)
 - [ ] **Ver com lukinhas/carlozs pagamentos** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do · OnHold: true — Description: Criar grupo sem george pra discutir
 
 ## In Progress
 - [ ] **08-05_AI UGC Explainer** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajwjjf1
+- [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
+  - [x] Responder Freitas (Due: 0002-08-11)
 - [ ] **VAI ME VICIAR** - Priority: P0 · Category: 1000vall/vaimeviciar · Status: To Do
   - [x] Mandar Rubel > luigi (Due: 0002-08-11)
 - [ ] **07-29_Brand Repository Videos + Motion Starter Pack Project** - Due: 2026-08-04 (Tue) · Category: Willow/Video Workspace · Status: In Progress · OnHold: true · ClickUp: 86adzx1x6
