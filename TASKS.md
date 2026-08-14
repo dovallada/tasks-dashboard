@@ -13,9 +13,10 @@
 - [ ] **ANGEL** - Due: 2026-08-11 (Tue) · Category: 1000vall/angel · Status: To Do · OnHold: true
   - [ ] Combinar Prod Flor (Due: 0002-08-11)
 - [ ] **Entrevista Freela IA** - Priority: P0 · Category: life · Status: To Do
+- [ ] **08-12_AI Iterations** - Due: 2026-08-18 (Tue) · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajzx32f
+- [ ] **08-05_AI UGC Explainer** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajwjjf1
 
 ## In Progress
-- [ ] **08-05_AI UGC Explainer** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajwjjf1
 - [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
   - [x] Responder Freitas (Due: 0002-08-11)
 - [ ] **1000hz** - Priority: P1 · Category: 1000vall/1000hz · Status: To Do
@@ -23,7 +24,8 @@
   - [ ] Mandar final bgreal
 - [ ] **VAI ME VICIAR** - Priority: P0 · Category: 1000vall/vaimeviciar · Status: To Do
   - [x] Mandar Rubel > luigi (Due: 0002-08-11)
-- [ ] **07-29_Brand Repository Videos + Motion Starter Pack Project** - Due: 2026-08-04 (Tue) · Category: Willow/Video Workspace · Status: In Progress · OnHold: true · ClickUp: 86adzx1x6
+  - [ ] Logo
+- [ ] **07-29_Brand Repository Videos + Motion Starter Pack Project** - Due: 2026-08-04 (Tue) · Category: Willow/Video Workspace · Status: In Progress · ClickUp: 86adzx1x6
 
 ## Done
 - [x] **Ver prêmios Rifa** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: life · Status: Done
