@@ -12,7 +12,7 @@
 - [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
   - [x] Responder Freitas (Due: 2026-08-11)
 - [ ] **1000hz** - Priority: P1 · Category: 1000vall/1000hz · Status: To Do
-  - [x] Falar Lukinhas mix (Due: 0002-08-02)
+  - [x] Falar Lukinhas mix (Due: 2026-08-24)
   - [ ] Mandar final bgreal (Due: 2026-10-06)
 - [ ] **08-12_AI Iterations** - Due: 2026-08-18 (Tue) · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajzx32f
 - [ ] **VAI ME VICIAR** - Priority: P0 · Category: 1000vall/vaimeviciar · Status: To Do
