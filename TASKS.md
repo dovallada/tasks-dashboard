@@ -23,6 +23,7 @@
   - [x] Mandar Rubel > luigi (Due: 0002-08-11)
   - [ ] Logo lettering
   - [ ] Fundos psicodelicos
+  - [ ] Falar Canazzi
 - [ ] **07-29_Brand Repository Videos + Motion Starter Pack Project** - Due: 2026-08-04 (Tue) · Category: Willow/Video Workspace · Status: In Progress · OnHold: true · ClickUp: 86adzx1x6
 
 ## Done
