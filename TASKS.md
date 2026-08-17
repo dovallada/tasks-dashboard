@@ -10,7 +10,7 @@
 
 ## In Progress
 - [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
-  - [x] Responder Freitas (Due: 0002-08-11)
+  - [x] Responder Freitas (Due: 2026-08-11)
 - [ ] **1000hz** - Priority: P1 · Category: 1000vall/1000hz · Status: To Do
   - [x] Falar Lukinhas mix (Due: 0002-08-02)
   - [ ] Mandar final bgreal (Due: 0002-10-10)
