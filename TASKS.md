@@ -16,7 +16,7 @@
   - [ ] Mandar final bgreal
 - [ ] **08-12_AI Iterations** - Due: 2026-08-18 (Tue) · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajzx32f
 - [ ] **VAI ME VICIAR** - Priority: P0 · Category: 1000vall/vaimeviciar · Status: To Do
-  - [x] Mandar Rubel > luigi (Due: 0002-08-11)
+  - [x] Mandar Rubel > luigi (Due: 0020-08-11)
   - [ ] Logo lettering (Due: 0002-08-17)
   - [ ] Fundos psicodelicos (Due: 0002-08-20)
   - [ ] Falar Canazzi (Due: 0002-08-17)
