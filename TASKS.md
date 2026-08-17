@@ -11,6 +11,8 @@
 ## To Do
 
 ## In Progress
+- [ ] **ANGEL** - Due: 2026-08-11 (Tue) · Category: 1000vall/angel · Status: Done · OnHold: true
+  - [ ] Combinar Prod Flor (Due: 0002-08-11)
 - [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do
   - [x] Responder Freitas (Due: 2026-08-11)
 - [ ] **1000hz** - Priority: P1 · Category: 1000vall/1000hz · Status: To Do
@@ -26,8 +28,6 @@
 - [ ] **08-12_AI Iterations** - Due: 2026-08-18 (Tue) · Category: Willow/Video Workspace · Status: In Progress · OnHold: true · ClickUp: 86ajzx32f
 
 ## Done
-- [ ] **ANGEL** - Due: 2026-08-11 (Tue) · Category: 1000vall/angel · Status: Done · OnHold: true
-  - [ ] Combinar Prod Flor (Due: 0002-08-11)
 - [x] **Reels Teste - AI QUE LOUCURA** - Due: 2026-08-11 (Tue) · Priority: P2 · Category: 1000vall/social · Status: Done — Description: Mandar Reels Teste + tiktok variaçoes
 - [x] **08-05_AI UGC Explainer** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ajwjjf1
 - [x] **Entrevista Freela IA** - Priority: P0 · Category: life · Status: Done
