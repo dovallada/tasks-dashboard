@@ -14,7 +14,6 @@
 - [ ] **1000hz** - Priority: P1 · Category: 1000vall/1000hz · Status: To Do
   - [x] Falar Lukinhas mix (Due: 2026-08-24)
   - [ ] Mandar final bgreal (Due: 2026-10-06)
-- [ ] **08-12_AI Iterations** - Due: 2026-08-18 (Tue) · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ajzx32f
 - [ ] **VAI ME VICIAR** - Priority: P0 · Category: 1000vall/vaimeviciar · Status: To Do
   - [x] Mandar Rubel > luigi (Due: 0020-08-11)
   - [ ] Logo lettering (Due: 0002-08-17)
@@ -22,6 +21,7 @@
   - [ ] Falar Canazzi (Due: 0002-08-17)
   - [ ] Falar Freitas (Due: 0002-08-17)
 - [ ] **07-29_Brand Repository Videos + Motion Starter Pack Project** - Due: 2026-08-04 (Tue) · Category: Willow/Video Workspace · Status: In Progress · OnHold: true · ClickUp: 86adzx1x6
+- [ ] **08-12_AI Iterations** - Due: 2026-08-18 (Tue) · Category: Willow/Video Workspace · Status: In Progress · OnHold: true · ClickUp: 86ajzx32f
 
 ## Done
 - [ ] **ANGEL** - Due: 2026-08-11 (Tue) · Category: 1000vall/angel · Status: Done · OnHold: true
