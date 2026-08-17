@@ -21,7 +21,7 @@
   - [ ] Mandar final bgreal
 - [ ] **VAI ME VICIAR** - Priority: P0 · Category: 1000vall/vaimeviciar · Status: To Do
   - [x] Mandar Rubel > luigi (Due: 0002-08-11)
-  - [ ] Logo lettering
+  - [ ] Logo lettering (Due: 0002-08-17)
   - [ ] Fundos psicodelicos
   - [ ] Falar Canazzi (Due: 0002-08-17)
   - [ ] Falar Freitas (Due: 0002-08-17)
