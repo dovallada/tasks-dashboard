@@ -5,7 +5,8 @@
 - [ ] **Falar Lua parcerias** - Due: 2026-08-11 (Tue) · Priority: P3 · Category: 1000vall/1000hz · Status: Backlog
 - [ ] **Subir projetos drop** - Priority: P1 · Category: Willow · Status: Backlog
 - [ ] **Ver com lukinhas/carlozs pagamentos** - Priority: P2 · Category: 1000vall/1000hz · Status: To Do — Description: Criar grupo sem george pra discutir
-- [ ] **Cracks**
+- [ ] **Cracks** - Priority: P1 · Category: 1000vall · Status: Backlog
+  - [ ] Ver cabos p2 p10
 
 ## To Do
 
