@@ -25,11 +25,11 @@
   - [x] Falar Canazzi (Due: 2026-08-17)
   - [x] Falar Freitas (Due: 2026-08-17)
 - [ ] **07-29_Brand Repository Videos + Motion Starter Pack Project** - Due: 2026-08-04 (Tue) · Category: Willow/Video Workspace · Status: In Progress · OnHold: true · ClickUp: 86adzx1x6
-- [ ] **08-12_AI Iterations** - Due: 2026-08-18 (Tue) · Category: Willow/Video Workspace · Status: In Progress · OnHold: true · ClickUp: 86ajzx32f
 - [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: In Progress · OnHold: true
   - [x] Responder Freitas (Due: 2026-08-11)
 
 ## Done
+- [x] **08-12_AI Iterations** - Due: 2026-08-18 (Tue) · Category: Willow/Video Workspace · Status: Done · OnHold: true · ClickUp: 86ajzx32f
 - [x] **Reels Teste - AI QUE LOUCURA** - Due: 2026-08-11 (Tue) · Priority: P2 · Category: 1000vall/social · Status: Done — Description: Mandar Reels Teste + tiktok variaçoes
 - [x] **08-05_AI UGC Explainer** - Due: 2026-08-11 (Tue) · Priority: P1 · Category: Willow/Video Workspace · Status: Done · ClickUp: 86ajwjjf1
 - [x] **Entrevista Freela IA** - Priority: P0 · Category: life · Status: Done
