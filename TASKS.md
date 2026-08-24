@@ -7,6 +7,7 @@
 - [ ] **Cracks** - Due: 2026-08-28 (Fri) · Priority: P1 · Category: 1000vall · Status: Backlog
   - [ ] XVOX
 - [ ] **LANÇAR 1000hz instrumental** - Due: 2026-10-10 (Sat) · Priority: P2 · Category: 1000vall/1000hz · Status: Backlog
+- [ ] **DJ SETS Eurotour**
 
 ## To Do
 - [ ] **ver seguro viagem 🧳** - Due: 2026-08-25 (Tue) · Priority: P0 · Category: euro trip · Status: To Do
