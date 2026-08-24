@@ -10,6 +10,7 @@
 - [ ] **LANÇAR 1000hz instrumental**
 
 ## To Do
+- [ ] **ver seguro viagem 🧳** - Priority: P0 · Category: euro trip · Status: To Do
 
 ## In Progress
 - [ ] **ANGEL** - Due: 2026-08-11 (Tue) · Category: 1000vall/angel · Status: Done · OnHold: true
