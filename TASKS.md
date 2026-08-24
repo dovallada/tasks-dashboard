@@ -13,6 +13,7 @@
 - [ ] **ver seguro viagem 🧳** - Due: 2026-08-25 (Tue) · Priority: P0 · Category: euro trip · Status: To Do
 
 ## In Progress
+- [ ] **8/20_AI Cartoons** - Due: 2026-08-25 (Tue) · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ak3nw09
 - [ ] **ANGEL** - Due: 2026-08-11 (Tue) · Category: 1000vall/angel · Status: Done · OnHold: true
   - [ ] Combinar Prod Flor (Due: 0002-08-11)
 - [ ] **1000hz** - Priority: P1 · Category: 1000vall/1000hz · Status: To Do
