@@ -15,6 +15,7 @@
   - [ ] Falar Vitao
   - [ ] Falar Briana
   - [ ] Falar Joao
+  - [ ] Cobrar Rassi
 
 ## In Progress
 - [ ] **8/20_AI Cartoons** - Due: 2026-08-25 (Tue) · Category: Willow/Video Workspace · Status: To Do · ClickUp: 86ak3nw09
