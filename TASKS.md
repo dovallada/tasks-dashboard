@@ -30,6 +30,7 @@
   - [x] Fundos psicodelicos (Due: 2026-08-21)
   - [x] Falar Canazzi (Due: 2026-08-17)
   - [x] Falar Freitas (Due: 2026-08-17)
+  - [ ] Freitas Capa pedir
 - [ ] **Shooting 1000hz** - Priority: P2 · Category: 1000vall/1000hz · Status: In Progress · OnHold: true
   - [x] Responder Freitas (Due: 2026-08-11)
 
